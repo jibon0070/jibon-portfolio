@@ -1,1 +1,7 @@
-<p>nav works!</p>
+<nav>
+  <a href="#" [class.active]="active == ''" (click)="active = ''"><mat-icon>home</mat-icon></a>
+  <a href="#about" [class.active]="active == 'about'" (click)="active = 'about'"><mat-icon>person</mat-icon></a>
+  <a href="#experience" [class.active]="active == 'experience'" (click)="active = 'experience'"><mat-icon>auto_stories</mat-icon></a>
+<!--  <a href="#services" [class.active]="active == 'services'" (click)="active = 'service'"><mat-icon>handshake</mat-icon></a>-->
+  <a href="#contact" [class.active]="active == 'contact'" (click)="active = 'contact'"><mat-icon>forum</mat-icon></a>
+</nav>

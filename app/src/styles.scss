@@ -7,7 +7,21 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: smooth!important;
+  //mat-icon{
+  //  display: inline-block;
+  //  //justify-content: center;
+  //  //align-items: center;
+  //}
+
+  .mat-icon {
+    background-repeat: no-repeat;
+    display: inline-block!important;
+    fill: currentColor;
+    height: 24px;
+    width: 24px;
+    vertical-align: middle;
+  }
 
   body {
     height: 100%;
@@ -33,6 +47,7 @@ html {
 
     section {
       margin-top: 8rem;
+      min-height: 100vh;
 
       h2, h5 {
         text-align: center;
