@@ -1,10 +1,11 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {AdminComponent} from "./admin.component";
 import {AuthGuard} from "../guards/auth.guard";
 import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
 import {environment} from "../../environments/environment";
+import {FirstTimeComponent} from "./first-time/first-time.component";
 
 const routes: Routes = [
   {
@@ -15,11 +16,20 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+    canActivate: [AuthGuard],
+    data: {
+      allowed: ['visitor']
+    }
   },
   {
     path: 'register',
     component: RegisterComponent,
     canActivate: environment.production ? [AuthGuard] : [],
+  },
+  {
+    path: 'first-time',
+    component: FirstTimeComponent,
+    canActivate: [AuthGuard],
   }
 ];
 
@@ -27,4 +37,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class AdminRoutingModule { }
+export class AdminRoutingModule {
+}

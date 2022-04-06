@@ -4,6 +4,7 @@ import {Config} from "./config";
 import {UsersService} from "../services/users.service";
 import {Router} from "@angular/router";
 import {of} from "rxjs";
+import {GoogleLoginProvider, SocialAuthService, SocialUser} from "angularx-social-login";
 
 export class Helpers {
   static time_difference: number = 21600;
@@ -122,52 +123,52 @@ export class Helpers {
     );
   }
 
-  // static login_with_google_popup(socialAuthService: SocialAuthService, callback: (disabled: boolean) => void) {
-  //   socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).catch(e => {
-  //     if (e == 'Login providers not ready yet. Are there errors on your console?') {
-  //       setTimeout(() => {
-  //         this.login_with_google_popup(socialAuthService, callback);
-  //       }, 500);
-  //     } else if (e.error == 'popup_closed_by_user') {
-  //       callback(false);
-  //     }
-  //   });
-  // }
+  static login_with_google_popup(socialAuthService: SocialAuthService, callback: (disabled: boolean) => void) {
+    socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).catch(e => {
+      if (e == 'Login providers not ready yet. Are there errors on your console?') {
+        setTimeout(() => {
+          this.login_with_google_popup(socialAuthService, callback);
+        }, 500);
+      } else if (e.error == 'popup_closed_by_user') {
+        callback(false);
+      }
+    });
+  }
 
-  // static google_login_listener(authService: SocialAuthService, usersService: UsersService, path: string | null, router: Router) {
-  //   let authStateSubscription = authService.authState.subscribe((user: SocialUser) => {
-  //     if (user) {
-  //       let token = user.idToken;
-  //       const login_with_google_subscription = usersService.loginWithGoogle(token).subscribe({
-  //         next: r => {
-  //           if (r.token) {
-  //             authStateSubscription.unsubscribe();
-  //             localStorage.setItem(Config.token, r.token);
-  //             usersService.$is_logged.emit(true);
-  //             let options: { queryParams?: { path: string } } = {};
-  //             if (path) {
-  //               options = {
-  //                 queryParams: {
-  //                   path
-  //                 }
-  //               };
-  //             }
-  //             if (r.first_time == '1') {
-  //               router.navigate(['/users/first-time'], options);
-  //             }
-  //             else {
-  //               if (path) {
-  //                 router.navigate([path])
-  //               } else {
-  //                 router.navigate(['/']);
-  //               }
-  //             }
-  //           }
-  //           login_with_google_subscription.unsubscribe();
-  //         }
-  //       });
-  //     }
-  //   });
-  //   return of(authStateSubscription);
-  // }
+  static google_login_listener(authService: SocialAuthService, usersService: UsersService, path: string | null, router: Router) {
+    let authStateSubscription = authService.authState.subscribe((user: SocialUser) => {
+      if (user) {
+        let token = user.idToken;
+        const login_with_google_subscription = usersService.loginWithGoogle(token).subscribe({
+          next: r => {
+            if (r.token) {
+              authStateSubscription.unsubscribe();
+              localStorage.setItem(Config.token, r.token);
+              usersService.$is_logged.emit(true);
+              let options: { queryParams?: { path: string } } = {};
+              if (path) {
+                options = {
+                  queryParams: {
+                    path
+                  }
+                };
+              }
+              if (r.first_time == '1') {
+                router.navigate(['/admin/first-time'], options);
+              }
+              else {
+                if (path) {
+                  router.navigate([path])
+                } else {
+                  router.navigate(['/']);
+                }
+              }
+            }
+            login_with_google_subscription.unsubscribe();
+          }
+        });
+      }
+    });
+    return of(authStateSubscription);
+  }
 }

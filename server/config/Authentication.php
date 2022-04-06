@@ -46,10 +46,10 @@ class Authentication
             $this->error = true;
             return $this;
         }
-        if ($user->role != $payload->role) {
-            $this->error = true;
-            return $this;
-        }
+//        if ($user->role != $payload->role) {
+//            $this->error = true;
+//            return $this;
+//        }
 
         if ($user->first_time == 1 && $this->send_first_time_error) {
             $this->error = true;

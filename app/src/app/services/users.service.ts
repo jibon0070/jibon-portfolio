@@ -51,16 +51,15 @@ export class UsersService {
     return this.httpClient.post<{
       first_time: string;
       token?: string;
-    }>(this.url + 'login-with-google', {token});
+    }>(this.url + '/login-with-google', {token});
   }
 
   firstTime(param: { data?: any; state: string }) {
     return this.httpClient.post<{
       success: boolean;
-      profile_picture: string;
       name: string;
       email: string;
-    }>(this.url + 'first-time', param);
+    }>(this.url + '/first-time', param);
   }
 
   login(value: any) {
@@ -71,6 +70,12 @@ export class UsersService {
   }
 
   loginAs(id: string) {
-    return this.httpClient.post<{ token: string;}>(this.url + 'login-as', {id});
+    return this.httpClient.post<{ token: string;}>(this.url + '/login-as', {id});
+  }
+
+  register(value: any) {
+    return this.httpClient.post<{
+      success: boolean;
+    }>(this.url + '/register', value);
   }
 }

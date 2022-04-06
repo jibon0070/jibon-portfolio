@@ -9,13 +9,15 @@ import {MatCardModule} from "@angular/material/card";
 import {ReactiveFormsModule} from "@angular/forms";
 import {CommonsModule} from "../commons/commons.module";
 import {MatButtonModule} from "@angular/material/button";
+import { FirstTimeComponent } from './first-time/first-time.component';
 
 
 @NgModule({
   declarations: [
     AdminComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    FirstTimeComponent
   ],
   imports: [
     CommonModule,
