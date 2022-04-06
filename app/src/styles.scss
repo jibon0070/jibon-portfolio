@@ -7,23 +7,16 @@
 }
 
 html {
-  scroll-behavior: smooth!important;
+  scroll-behavior: smooth !important;
   //mat-icon{
   //  display: inline-block;
   //  //justify-content: center;
   //  //align-items: center;
   //}
 
-  .mat-icon {
-    background-repeat: no-repeat;
-    display: inline-block!important;
-    fill: currentColor;
-    height: 24px;
-    width: 24px;
-    vertical-align: middle;
-  }
 
   body {
+
     height: 100%;
     //background: $color-bg;
     color: $color-white;
@@ -32,9 +25,24 @@ html {
     background-size: 8px 8px;
     font-family: Roboto, "Helvetica Neue", sans-serif;
 
+    .mat-icon {
+      background-repeat: no-repeat;
+      display: inline-block !important;
+      fill: currentColor;
+      height: 24px;
+      width: 24px;
+      vertical-align: middle;
+    }
+
     .container {
       width: $container-width-lg;
       margin: 0 auto;
+    }
+
+    .admin-container {
+      max-width: calc(786px + 2em);
+      margin: 0 auto;
+      padding: 1em;
     }
 
     h1, h2, h3, h4, h5, h6 {
@@ -100,8 +108,15 @@ html {
       width: 100%;
       object-fit: cover;
     }
+    .align-right{
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: .75em;
+    }
   }
 }
+
 
 *, *:before, *:after {
   box-sizing: border-box;
@@ -114,23 +129,23 @@ html {
 
 
 @media screen and(max-width: 1024px) {
-  .container{
+  .container {
     width: $container-width-md;
   }
 
-  section{
+  section {
     margin-top: 6rem;
   }
 }
 
 
 @media screen and(max-width: 600px) {
-  .container{
+  .container {
     width: $container-width-sm;
   }
 
-  section{
-    h2{
+  section {
+    h2 {
       margin-bottom: 2rem;
     }
   }

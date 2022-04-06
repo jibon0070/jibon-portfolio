@@ -4,36 +4,24 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HeaderComponent } from './header/header.component';
-import { NavComponent } from './nav/nav.component';
-import { AboutComponent } from './about/about.component';
-import { ExperienceComponent } from './experience/experience.component';
-import { ServicesComponent } from './services/services.component';
-import { PortfolioComponent } from './portfolio/portfolio.component';
-import { TestimonialsComponent } from './testimonials/testimonials.component';
-import { ContactComponent } from './contact/contact.component';
-import { FooterComponent } from './footer/footer.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import {MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    NavComponent,
-    AboutComponent,
-    ExperienceComponent,
-    ServicesComponent,
-    PortfolioComponent,
-    TestimonialsComponent,
-    ContactComponent,
-    FooterComponent
+    PageNotFoundComponent,
   ],
-	imports: [
-		BrowserModule,
-		AppRoutingModule,
-		BrowserAnimationsModule,
-		MatIconModule
-	],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatIconModule,
+    MatButtonModule,
+    HttpClientModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

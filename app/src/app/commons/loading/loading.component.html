@@ -1,0 +1,5 @@
+<div class="loading">
+  <img src="assets/preloader3.gif" alt="preloader">
+  <progress *ngIf="percent" max="100" [value]="percent"></progress>
+  <h5 *ngIf="percent">{{percent}}%</h5>
+</div>
