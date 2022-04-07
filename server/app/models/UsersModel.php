@@ -8,8 +8,9 @@
 		public $password;
 		public $email;
 		public $first_time = 1;
+        public $role;
 
-		public function __construct() {
+        public function __construct() {
 			parent::__construct('users');
 		}
 	}

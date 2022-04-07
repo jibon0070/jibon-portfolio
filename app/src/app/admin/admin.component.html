@@ -1,1 +1,14 @@
-<p>admin works!</p>
+<div class="admin-container">
+  <div class="align-right">
+    <button mat-raised-button color="warn" (click)="logout()">Logout</button>
+  </div>
+  <h2 style="text-align: center">Admin Panel</h2>
+  <div class="grid" style="display:grid; grid-template-columns: repeat(12, 1fr); gap: .75em">
+    <mat-card *ngFor="let link of links" style="grid-column: span 4">
+      <mat-card-title style="text-align: center">{{link.name}}</mat-card-title>
+      <mat-card-content>
+        <div class="align-right"><a [routerLink]="link.link" mat-raised-button color="primary">View</a></div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

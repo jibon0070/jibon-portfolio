@@ -13,6 +13,7 @@ import {ContactComponent} from "./contact/contact.component";
 import {FooterComponent} from "./footer/footer.component";
 import {MatIconModule} from "@angular/material/icon";
 import {SwiperModule} from "swiper/angular";
+import {CommonsModule} from "../commons/commons.module";
 
 
 @NgModule({
@@ -27,11 +28,12 @@ import {SwiperModule} from "swiper/angular";
     ContactComponent,
     FooterComponent
   ],
-  imports: [
-    CommonModule,
-    HomeRoutingModule,
-    MatIconModule,
-    SwiperModule
-  ]
+    imports: [
+        CommonModule,
+        HomeRoutingModule,
+        MatIconModule,
+        SwiperModule,
+        CommonsModule
+    ]
 })
 export class HomeModule { }

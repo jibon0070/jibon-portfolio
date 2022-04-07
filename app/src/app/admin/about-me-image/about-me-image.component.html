@@ -1,0 +1,14 @@
+<div class="admin-container">
+  <div class="align-right">
+    <button mat-raised-button color="warn" (click)="back()">Back</button>
+  </div>
+  <img src="{{url}}" alt="">
+  <form [formGroup]="data">
+    <input (change)="change_file($event)" type="file" accept="image/*" formControlName="image" #file style="display: none">
+    <div class="align-center" style="margin-top: .75em;">
+      <button (click)="file.click()" mat-raised-button color="primary">{{url ? 'Update' : 'Upload'}}</button>
+    </div>
+  </form>
+</div>
+
+<app-loading *ngIf="loading"></app-loading>

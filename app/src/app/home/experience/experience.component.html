@@ -2,99 +2,28 @@
   <h5>The Skills I Have</h5>
   <h2>My Experience</h2>
   <div class="container">
-    <div class="frontend">
+    <div class="frontend" *ngIf="experiences?.frontend?.length">
       <h3>Frontend Development</h3>
       <div class="content">
-        <article class="details">
+        <article class="details" *ngFor="let data of experiences?.frontend">
           <mat-icon>verified</mat-icon>
-          <div><h4>HTML</h4>
-            <small class="text-light">Experienced</small></div>
-        </article>
-        <article class="details">
-          <mat-icon>verified</mat-icon>
-          <div><h4>CSS</h4>
-            <small class="text-light">Experienced</small></div>
-        </article>
-        <article class="details">
-          <mat-icon>verified</mat-icon>
-          <div><h4>JAVASCRIPT</h4>
-            <small class="text-light">Experienced</small></div>
-        </article>
-        <article class="details">
-          <mat-icon>verified</mat-icon>
-          <div><h4>BOOTSTRAP</h4>
-            <small class="text-light">Intermediate</small></div>
-        </article>
-        <article class="details">
-          <mat-icon>verified</mat-icon>
-          <div><h4>TAILWIND</h4>
-            <small class="text-light">Intermediate</small></div>
-        </article>
-        <article class="details">
-          <mat-icon>verified</mat-icon>
-          <div><h4>REACT</h4>
-            <small class="text-light">Intermediate</small></div>
-        </article>
-        <article class="details">
-          <mat-icon>verified</mat-icon>
-          <div><h4>Angular</h4>
-            <small class="text-light">Experienced</small></div>
+          <div><h4>{{data.title}}</h4>
+            <small class="text-light">{{data.experience}}</small></div>
         </article>
       </div>
     </div>
-    <div class="backend">
+    <div class="backend" *ngIf="experiences?.backend?.length">
       <h3>Backend Development</h3>
       <div class="content">
-        <article class="details">
+        <article class="details" *ngFor="let data of experiences?.backend">
           <mat-icon>verified</mat-icon>
           <div>
-            <h4>PHP</h4>
-            <small class="text-light">Experienced</small>
-          </div>
-        </article>
-        <article class="details">
-          <mat-icon>verified</mat-icon>
-          <div>
-            <h4>NODEJS</h4>
-            <small class="text-light">Experienced</small>
-          </div>
-        </article>
-        <article class="details">
-          <mat-icon>verified</mat-icon>
-          <div>
-            <h4>MONGODB</h4>
-            <small class="text-light">Intermediate</small>
-          </div>
-        </article>
-        <article class="details">
-          <mat-icon>verified</mat-icon>
-          <div>
-            <h4>MYSQL</h4>
-            <small class="text-light">Intermediate</small>
-          </div>
-        </article>
-        <article class="details">
-          <mat-icon>verified</mat-icon>
-          <div>
-            <h4>PYTHON</h4>
-            <small class="text-light">Intermediate</small>
-          </div>
-        </article>
-        <article class="details">
-          <mat-icon>verified</mat-icon>
-          <div>
-            <h4>C#</h4>
-            <small class="text-light">Intermediate</small>
-          </div>
-        </article>
-        <article class="details">
-          <mat-icon>verified</mat-icon>
-          <div>
-            <h4>JAVA</h4>
-            <small class="text-light">Intermediate</small>
+            <h4>{{data.title}}</h4>
+            <small class="text-light">{{data.experience}}</small>
           </div>
         </article>
       </div>
     </div>
   </div>
 </section>
+<app-loading *ngIf="loading"></app-loading>

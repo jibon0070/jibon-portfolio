@@ -10,6 +10,9 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {CommonsModule} from "../commons/commons.module";
 import {MatButtonModule} from "@angular/material/button";
 import { FirstTimeComponent } from './first-time/first-time.component';
+import { HeaderImageComponent } from './header-image/header-image.component';
+import { AboutMeImageComponent } from './about-me-image/about-me-image.component';
+import { SiteOptionsComponent } from './site-options/site-options.component';
 
 
 @NgModule({
@@ -17,7 +20,10 @@ import { FirstTimeComponent } from './first-time/first-time.component';
     AdminComponent,
     RegisterComponent,
     LoginComponent,
-    FirstTimeComponent
+    FirstTimeComponent,
+    HeaderImageComponent,
+    AboutMeImageComponent,
+    SiteOptionsComponent,
   ],
   imports: [
     CommonModule,

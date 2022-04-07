@@ -3,7 +3,7 @@
     <mat-card-title style="text-align: center">Login</mat-card-title>
     <mat-card-content>
       <form [formGroup]="data" (ngSubmit)="submit()">
-        <app-form-group label="Username or Email" fcn="username" type="text" [clicked]="clicked"></app-form-group>
+        <app-form-group #username label="Username or Email" fcn="username" type="text" [clicked]="clicked"></app-form-group>
         <app-form-group label="Password" fcn="password" type="password" [clicked]="clicked"></app-form-group>
         <div class="align-right">
           <button mat-raised-button color="warn" [disabled]="disable_login_with_google_button" type="button" (click)="login_with_google()">Login with google</button>

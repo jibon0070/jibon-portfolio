@@ -108,11 +108,47 @@ html {
       width: 100%;
       object-fit: cover;
     }
-    .align-right{
+
+    .align-right {
       display: flex;
       justify-content: flex-end;
       align-items: center;
       gap: .75em;
+    }
+
+    .align-center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: .75em;
+    }
+
+    .table-responsive {
+      display: block;
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      border-spacing: 0;
+      display: table;
+
+      td, th {
+        padding: .75rem;
+        vertical-align: top;
+        border-top: 1px solid #dee2e6;
+        text-align: center;
+      }
+
+      tr:last-child {
+        td {
+          border-bottom: 1px solid #dee2e6;
+        }
+      }
     }
   }
 }

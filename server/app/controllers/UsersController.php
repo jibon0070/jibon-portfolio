@@ -14,6 +14,7 @@
 			if (!password_verify($data->password, $user->password)) $this->send->json(["error" => "password"]);
 			$payload = [
 				"id" => $user->id,
+                "role" => $user->role
 			];
 			$token = JWT::encode($payload, SECRET_KEY);
 			$this->send->json([
@@ -28,6 +29,7 @@
 			if (!isset($data->email) || !(new UsersModel())->uniq($data->email, "email")) $this->send->status(401);
 			$user = (new UsersModel());
 			$user->email = $data->email;
+            $user->role = "admin";
 			$user->save();
 			$this->send->json([success => true]);
 		}
@@ -53,9 +55,10 @@
 			$ticket = $client->verifyIdToken($data->token);
 			if (!$ticket) $this->send->status(401);
 			$user = (new UsersModel())->findFirst([conditions => "email = ?", bind => [$ticket['email']]]);
-			if (!$user) $this->send->status(401);
+			if (!$user) $this->send->json([error => "email"]);
 			$payload = [
 				"id" => $user->id,
+                "role" => $user->role
 			];
 			$token = Firebase\JWT\JWT::encode($payload, SECRET_KEY);
 			$this->send->json([

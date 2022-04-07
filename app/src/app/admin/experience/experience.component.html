@@ -1,0 +1,30 @@
+<div class="admin-container">
+  <div style="display:flex;align-items:center; justify-content:space-between;">
+    <h2>Experience List</h2>
+    <div class="align-right">
+      <a routerLink="new" mat-raised-button color="primary">New</a>
+      <button mat-raised-button color="warn" (click)="back()">Back</button>
+    </div>
+  </div>
+  <div class="table-responsive" style="margin-top: .75em;">
+    <table class="table">
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Experience</th>
+        <th>Category</th>
+        <th></th>
+      </tr>
+      <tr *ngFor="let experience of experiences">
+        <td>{{experience.id}}</td>
+        <td>{{experience.title}}</td>
+        <td>{{experience.experience}}</td>
+        <td>{{experience.category}}</td>
+        <td>
+<!--          <a routerLink="edit/{{experience.id}}" mat-raised-button color="primary">Edit</a>-->
+          <button mat-raised-button color="warn" (click)="delete(experience.id)">Delete</button>
+        </td>
+    </table>
+  </div>
+</div>
+<app-loading *ngIf="loading"></app-loading>

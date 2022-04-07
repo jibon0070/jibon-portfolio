@@ -1,10 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Title} from "@angular/platform-browser";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UsersService} from "../../services/users.service";
 import {GoogleLoginProvider, SocialAuthService} from "angularx-social-login";
 import {Helpers} from "../../helpers/Helpers";
 import {ActivatedRoute, Router} from "@angular/router";
+import {FormGroupComponent} from "../../commons/form-group/form-group.component";
+import {Config} from "../../helpers/config";
 
 @Component({
   selector: 'app-login',
@@ -17,9 +19,11 @@ export class LoginComponent implements OnInit {
     username: ['', Validators.required],
     password: ['', Validators.required]
   });
+  @ViewChild('username') username!: ElementRef<FormGroupComponent>;
   private submitted: Boolean = false;
   loading: boolean = false;
   disable_login_with_google_button: boolean = false;
+  private path!: string;
 
   constructor(
     private readonly titleService: Title,
@@ -34,8 +38,28 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.titleService.setTitle('Login');
     this.activatedRoute.queryParams.subscribe(params => {
-      Helpers.google_login_listener(this.socialAuthService, this.userService, params['path'], this.router).subscribe(r => {
-        console.log(r);
+      this.path = params['path'];
+      Helpers.google_login_listener(this.socialAuthService, this.userService, (r) => {
+        if (r.error) {
+          this.disable_login_with_google_button = false;
+          this.loading = false;
+          alert('Invalid Email');
+        } else {
+          localStorage.setItem(Config.token, r.token);
+          if (r.first_time == 0) {
+            if (this.path) {
+              this.router.navigate(['/admin'], {queryParams: {path: this.path}});
+            } else {
+              this.router.navigate(['/admin']);
+            }
+          } else {
+            if (this.path) {
+              this.router.navigate(['/admin/first-time'], {queryParams: {path: this.path}});
+            } else {
+              this.router.navigate(['/admin/first-time']);
+            }
+          }
+        }
       });
     });
   }
@@ -50,11 +74,9 @@ export class LoginComponent implements OnInit {
           if (res.error) {
             if (res.error == 'username') {
               this.data.get('username')?.setErrors({'username': 'Invalid username or email.'});
-            }
-            else if (res.error == 'password') {
+            } else if (res.error == 'password') {
               this.data.get('password')?.setErrors({'password': 'Invalid password.'});
-            }
-            else if (res.error == 'first_time') {
+            } else if (res.error == 'first_time') {
               this.data.get('username')?.setErrors({'username': 'Email not verified.'});
             }
           }

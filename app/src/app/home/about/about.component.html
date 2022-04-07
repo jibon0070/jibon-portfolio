@@ -4,25 +4,25 @@
   <div class="container">
     <div class="me">
       <div class="me-image">
-        <img src="../../../assets/me2.png" alt="Broken me 2">
+        <img src="{{about_me_image ?? '../../../assets/me2.png'}}" alt="Broken me 2">
       </div>
     </div>
     <div class="content">
       <div class="cards">
-        <article class="card">
+        <article class="card" *ngIf="experience">
           <mat-icon>emoji_events</mat-icon>
           <h5>Experience</h5>
-          <small>5+ Years Working</small>
+          <small>{{experience}}+ Years Working</small>
         </article>
-        <article class="card">
+        <article class="card" *ngIf="clients">
           <mat-icon>people</mat-icon>
           <h5>Clients</h5>
-          <small>60+ Worldwide Clients</small>
+          <small>{{clients}}+ Worldwide Clients</small>
         </article>
-        <article class="card">
+        <article class="card" *ngIf="projects">
           <mat-icon>source</mat-icon>
           <h5>Projects</h5>
-          <small>80+ Completed Projects</small>
+          <small>{{projects}}+ Completed Projects</small>
         </article>
       </div>
       <a href="#contact" class="btn btn-primary">Let's Talk</a>

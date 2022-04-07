@@ -135,40 +135,20 @@ export class Helpers {
     });
   }
 
-  static google_login_listener(authService: SocialAuthService, usersService: UsersService, path: string | null, router: Router) {
+  static google_login_listener(authService: SocialAuthService, usersService: UsersService, callback: (r: any) => void) {
     let authStateSubscription = authService.authState.subscribe((user: SocialUser) => {
       if (user) {
         let token = user.idToken;
         const login_with_google_subscription = usersService.loginWithGoogle(token).subscribe({
           next: r => {
+            login_with_google_subscription.unsubscribe();
             if (r.token) {
               authStateSubscription.unsubscribe();
-              localStorage.setItem(Config.token, r.token);
-              usersService.$is_logged.emit(true);
-              let options: { queryParams?: { path: string } } = {};
-              if (path) {
-                options = {
-                  queryParams: {
-                    path
-                  }
-                };
-              }
-              if (r.first_time == '1') {
-                router.navigate(['/admin/first-time'], options);
-              }
-              else {
-                if (path) {
-                  router.navigate([path])
-                } else {
-                  router.navigate(['/']);
-                }
-              }
             }
-            login_with_google_subscription.unsubscribe();
+            callback(r);
           }
         });
       }
     });
-    return of(authStateSubscription);
   }
 }

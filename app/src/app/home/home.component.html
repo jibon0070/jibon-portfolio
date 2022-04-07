@@ -1,9 +1,14 @@
-<app-header></app-header>
+<app-header [header_image]="header_image"></app-header>
 <app-nav></app-nav>
-<app-about></app-about>
+<app-about [about_me_image]="about_me_image"
+           [experience]="experience"
+           [clients]="clients"
+           [projects]="projects"
+></app-about>
 <app-experience></app-experience>
 <!--<app-services></app-services>-->
 <app-portfolio></app-portfolio>
 <app-testimonials></app-testimonials>
 <app-contact></app-contact>
 <app-footer></app-footer>
+<app-loading *ngIf="loading"></app-loading>
