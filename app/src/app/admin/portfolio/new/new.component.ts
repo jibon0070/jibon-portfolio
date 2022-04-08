@@ -65,7 +65,6 @@ export class NewComponent implements OnInit {
             this.submitted = false;
             this.loading = false;
             alert(r.error);
-            console.log(r);
           }
         },
         error: e => {

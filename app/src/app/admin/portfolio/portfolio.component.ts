@@ -29,7 +29,6 @@ export class PortfolioComponent implements OnInit {
   private fetch() {
     this.adminService.portfolio.index().subscribe({
       next: (res) => {
-        console.log(res);
         this.portfolios = res;
         this.loading = false;
       },

@@ -22,7 +22,6 @@ export class TestimonialsComponent implements OnInit {
     this.testimonialService.index.subscribe({
       next: (testimonials) => {
         this.testimonials = testimonials;
-        console.log(this.testimonials);
         this.loading = false;
       },
       error: (err) => {

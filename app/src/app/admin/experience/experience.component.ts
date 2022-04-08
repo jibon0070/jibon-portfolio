@@ -26,7 +26,6 @@ export class ExperienceComponent implements OnInit {
   private fetch() {
     this.adminService.experience.index().subscribe({
       next: (experiences) => {
-        console.log(experiences);
         this.experiences = experiences;
         this.loading = false;
       },

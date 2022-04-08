@@ -20,7 +20,6 @@ export class PortfolioComponent implements OnInit {
     this.portfolioService.index.subscribe({
       next: (portfolios) => {
         this.portfolios = portfolios;
-        console.log(portfolios);
         this.loading = false;
       },
       error: (err) => {

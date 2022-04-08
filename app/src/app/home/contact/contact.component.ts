@@ -30,9 +30,14 @@ export class ContactComponent implements OnInit {
       this.loading = true;
       this.contactService.send(this.data.value).subscribe({
         next: (res) => {
+          if(res.error){
+            alert(res.error);
+          }else if(res.success){
+            alert("Message sent successfully");
+          }
+          this.data.reset();
           this.submitted = false;
           this.loading = false;
-          console.log(res);
         },
         error: (err) => {
           this.submitted = false;
@@ -40,6 +45,15 @@ export class ContactComponent implements OnInit {
           console.log(err);
         }
       });
+    }
+    else{
+      if(this.data.get('name')?.invalid){
+        alert("Name is required");
+      }else if(this.data.get('email')?.invalid){
+        alert("Email is required");
+      }else if(this.data.get('message')?.invalid){
+        alert("Message is required");
+      }
     }
   }
 }
