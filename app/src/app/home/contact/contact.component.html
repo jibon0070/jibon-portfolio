@@ -22,7 +22,7 @@
         <a href="https://api.whatsapp.com?send=+8801919403058/" target="_blank">Send message</a>
       </div>
     </div>
-    <form action="">
+    <form [formGroup]="data" (ngSubmit)="submit()">
       <input type="text" formControlName="name" placeholder="Your Full Name">
       <input type="text" formControlName="email" placeholder="Your Email">
       <textarea formControlName="message" placeholder="Your Message"></textarea>
@@ -30,3 +30,4 @@
     </form>
   </div>
 </section>
+<app-loading *ngIf="loading"></app-loading>

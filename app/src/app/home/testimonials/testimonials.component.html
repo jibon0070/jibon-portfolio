@@ -3,44 +3,13 @@
   <h2>Testimonials</h2>
   <div class="container">
     <swiper [navigation]="true">
-      <ng-template swiperSlide class="testimonial">
+      <ng-template swiperSlide class="testimonial" *ngFor="let testimonial of testimonials">
         <div class="avatar">
-          <img src="../../../assets/me2.png" alt="broken client avatar">
+          <img src="{{api}}{{testimonial.image_link}}" alt="broken client avatar">
         </div>
-        <h5 class="name">John Doe</h5>
+        <h5 class="name">{{testimonial.name}}</h5>
         <small class="review">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum iusto libero praesentium quam recusandae,
-          repellat voluptatem. Adipisci nam quae voluptatibus.
-        </small>
-      </ng-template>
-      <ng-template swiperSlide class="testimonial">
-        <div class="avatar">
-          <img src="../../../assets/me2.png" alt="broken client avatar">
-        </div>
-        <h5 class="name">John Doe</h5>
-        <small class="review">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum iusto libero praesentium quam recusandae,
-          repellat voluptatem. Adipisci nam quae voluptatibus.
-        </small>
-      </ng-template>
-      <ng-template swiperSlide class="testimonial">
-        <div class="avatar">
-          <img src="../../../assets/me2.png" alt="broken client avatar">
-        </div>
-        <h5 class="name">John Doe</h5>
-        <small class="review">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum iusto libero praesentium quam recusandae,
-          repellat voluptatem. Adipisci nam quae voluptatibus.
-        </small>
-      </ng-template>
-      <ng-template swiperSlide class="testimonial">
-        <div class="avatar">
-          <img src="../../../assets/me2.png" alt="broken client avatar">
-        </div>
-        <h5 class="name">John Doe</h5>
-        <small class="review">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum iusto libero praesentium quam recusandae,
-          repellat voluptatem. Adipisci nam quae voluptatibus.
+          {{testimonial.description}}
         </small>
       </ng-template>
     </swiper>

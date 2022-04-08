@@ -2,15 +2,16 @@
   <h5>My Recent Work</h5>
   <h2>Portfolio</h2>
   <div class="container">
-    <article class="item">
+    <article class="item" *ngFor="let portfolio of portfolios">
       <div class="item-image">
-        <img src="../../../assets/facebook.svg" alt="Broken Project Image">
+        <img src="{{api}}{{portfolio.image_link}}" alt="Broken {{portfolio.title}} image">
       </div>
-      <h3>This is a port folio item title</h3>
+      <h3>{{portfolio.title}}</h3>
       <div class="cta">
-        <a href="https://github.com/jibon0070" target="_blank" class="btn">Github</a>
-        <a href="https://github.com/jibon0070" target="_blank" class="btn btn-primary">Live</a>
+        <a *ngIf="portfolio.github_link" href="{{portfolio.github_link}}" target="_blank" class="btn">Github</a>
+        <a *ngIf="portfolio.live_link" href="{{portfolio.live_link}}" target="_blank" class="btn btn-primary">Live</a>
       </div>
     </article>
   </div>
 </section>
+<app-loading *ngIf="loading"></app-loading>

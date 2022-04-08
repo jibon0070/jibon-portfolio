@@ -42,6 +42,10 @@ const routes: Routes = [
     loadChildren: () => import('./portfolio/portfolio.module').then(m => m.PortfolioModule),
   },
   {
+    path:'testimonials',
+    loadChildren: () => import('./testimonials/testimonials.module').then(m => m.TestimonialsModule),
+  },
+  {
     path: 'login',
     component: LoginComponent,
     canActivate: [AuthGuard],

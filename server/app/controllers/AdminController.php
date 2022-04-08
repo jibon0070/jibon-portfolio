@@ -99,7 +99,18 @@
 
 		public function index()
 		{
-
+			if (!$this->request->isGet()) $this->send->status(404);
+			if ($this->auth->error()) $this->send->status(401);
+			$portfolios = array_map(function ($portfolio) {
+				return [
+					"id" => $portfolio->id,
+					"title" => ucwords($portfolio->title),
+					"github_link" => $portfolio->github_link,
+					"live_link" => $portfolio->live_link,
+					"image_link" => $portfolio->image_link
+				];
+			}, (new PortfolioModel())->find());
+			$this->send->json($portfolios);
 		}
 
 		public function new()
@@ -113,11 +124,93 @@
 			) $this->send->status(401);
 			$data = (object)[
 				"title" => $_POST['title'],
-				"github_link" => $_POST['github_link'],
-				"live_link" => $_POST['live_link'],
-				"image" => (object)$_FILES['image'],
+				"image" => (object)$_FILES['image']
 			];
-			$this->send->json($data);
+			if (isset($_POST['github_link'])) $data->github_link = $_POST['github_link'];
+			if (isset($_POST['live_link'])) $data->description = $_POST['live_link'];
+			$portfolio = new PortfolioModel();
+			$portfolio->title = $data->title;
+			$portfolio->github_link = isset($data->github_link) ? trim($data->github_link) : null;
+			$portfolio->live_link = isset($data->live_link) ? trim($data->live_link) : null;
+			if (!is_dir(root . ds . 'uploads'))
+				mkdir(root . ds . 'uploads');
+			if (!is_dir(root . ds . 'uploads' . ds . 'images'))
+				mkdir(root . ds . 'uploads' . ds . 'images');
+			if ($data->image->error !== UPLOAD_ERR_OK) $this->send->json(["error" => "Error uploading image"]);
+			$path = ds . 'uploads' . ds . 'images' . ds . time() . random_int(0, 2000) . $data->image->name;
+			if (!move_uploaded_file($data->image->tmp_name, root . $path)) $this->send->json(["error" => "Error uploading image"]);
+			$portfolio->image_link = $path;
+			$portfolio->created_at = time();
+			if (!$portfolio->save()) $this->send->json(["error" => "Error saving portfolio"]);
+			$this->send->json([success => true]);
+		}
+
+		public function delete()
+		{
+			if (!$this->request->isPost()) $this->send->status(404);
+			if ($this->auth->error()) $this->send->status(401);
+			$data = $this->request->get();
+			if (!isset($data->id)) $this->send->status(401);
+			$portfolio = (new PortfolioModel())->findById($data->id);
+			if (!$portfolio) $this->send->json(["error" => "Portfolio does not exist"]);
+			if (!$portfolio->delete()) $this->send->json(["error" => "Error deleting portfolio"]);
+			$this->send->json([success => true]);
+		}
+	}
+
+	class Testimonial extends Controller
+	{
+
+		public function index()
+		{
+			if (!$this->request->isGet()) $this->send->status(404);
+			if ($this->auth->error()) $this->send->status(401);
+			$testimonials = array_map(function ($testimonial) {
+				return [
+					"id" => $testimonial->id,
+					"name" => ucwords($testimonial->name),
+					"description" => $testimonial->description,
+					"image_link" => $testimonial->image_link
+				];
+			}, (new TestimonialModel())->find());
+			$this->send->json($testimonials);
+		}
+
+		public function new()
+		{
+			if (!$this->request->isPost()) $this->send->status(404);
+			if ($this->auth->error()) $this->send->status(401);
+			if (
+				!isset($_POST['name']) ||
+				!isset($_POST['description']) ||
+				!isset($_FILES['image'])
+			) $this->send->status(401);
+			if ($_FILES['image']['error'] !== UPLOAD_ERR_OK) $this->send->json(["error" => "Error uploading image"]);
+			$testimonial = new TestimonialModel();
+			$testimonial->name = $_POST['name'];
+			$testimonial->description = $_POST['description'];
+			if (!is_dir(root . ds . 'uploads'))
+				mkdir(root . ds . 'uploads');
+			if (!is_dir(root . ds . 'uploads' . ds . 'images'))
+				mkdir(root . ds . 'uploads' . ds . 'images');
+			$path = ds . 'uploads' . ds . 'images' . ds . time() . random_int(0, 2000) . $_FILES['image']['name'];
+			if (!move_uploaded_file($_FILES['image']['tmp_name'], root . $path)) $this->send->json(["error" => "Error uploading image"]);
+			$testimonial->image_link = $path;
+			$testimonial->created_at = time();
+			if (!$testimonial->save()) $this->send->json(["error" => "Error saving testimonial"]);
+			$this->send->json([success => true]);
+		}
+
+		public function delete()
+		{
+			if (!$this->request->isPost()) $this->send->status(404);
+			if ($this->auth->error()) $this->send->status(401);
+			$data = $this->request->get();
+			if (!isset($data->id)) $this->send->status(401);
+			$testimonial = (new TestimonialModel())->findById($data->id);
+			if (!$testimonial) $this->send->json(["error" => "Testimonial does not exist"]);
+			if (!$testimonial->delete()) $this->send->json(["error" => "Error deleting testimonial"]);
+			$this->send->json([success => true]);
 		}
 	}
 
@@ -206,6 +299,16 @@
 			$portfolio_controller = new Portfolio();
 			if (!count($params) || $params[0] == '' || $params[0] == 'index') $portfolio_controller->index();
 			elseif ($params[0] == 'new') $portfolio_controller->new();
+			elseif ($params[0] == 'delete') $portfolio_controller->delete();
+			$this->send->status(404);
+		}
+
+		public function testimonialAction($params)
+		{
+			$testimonial_controller = new Testimonial();
+			if (!count($params) || $params[0] == '' || $params[0] == 'index') $testimonial_controller->index();
+			elseif ($params[0] == 'new') $testimonial_controller->new();
+			elseif ($params[0] == 'delete') $testimonial_controller->delete();
 			$this->send->status(404);
 		}
 	}

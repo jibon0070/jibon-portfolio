@@ -17,8 +17,6 @@ export class ExperienceComponent implements OnInit {
   ngOnInit(): void {
     this.experienceService.index.subscribe({
       next: (experiences) => {
-        console.table(experiences.frontend);
-        console.table(experiences.backend);
         this.experiences = experiences;
         this.loading = false;
       },

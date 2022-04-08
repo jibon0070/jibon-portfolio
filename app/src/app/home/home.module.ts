@@ -14,6 +14,7 @@ import {FooterComponent} from "./footer/footer.component";
 import {MatIconModule} from "@angular/material/icon";
 import {SwiperModule} from "swiper/angular";
 import {CommonsModule} from "../commons/commons.module";
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -28,12 +29,13 @@ import {CommonsModule} from "../commons/commons.module";
     ContactComponent,
     FooterComponent
   ],
-    imports: [
-        CommonModule,
-        HomeRoutingModule,
-        MatIconModule,
-        SwiperModule,
-        CommonsModule
-    ]
+	imports: [
+		CommonModule,
+		HomeRoutingModule,
+		MatIconModule,
+		SwiperModule,
+		CommonsModule,
+		ReactiveFormsModule
+	]
 })
 export class HomeModule { }

@@ -1,36 +1,34 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {Title} from "@angular/platform-browser";
 import {PlatformLocation} from "@angular/common";
 import {AdminService} from "../../services/admin.service";
 import {environment} from "../../../environments/environment";
 
 @Component({
-  selector: 'app-portfolio',
-  templateUrl: './portfolio.component.html',
-  styleUrls: ['./portfolio.component.scss']
+  selector: 'app-testimonials',
+  templateUrl: './testimonials.component.html',
+  styleUrls: ['./testimonials.component.scss']
 })
-export class PortfolioComponent implements OnInit {
+export class TestimonialsComponent implements OnInit {
   loading: boolean = true;
-  portfolios: { id: string; title: string; github_link: string; live_link: string; image_link: string }[] = [];
-  api = environment.api;
+  testimonials: { id: string; name: string; description: string; image_link: string }[] = [];
+  api: string = environment.api;
 
   constructor(
     private readonly titleService: Title,
     private readonly platformLocation: PlatformLocation,
     private readonly adminService: AdminService
-  ) {
-  }
+  ) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle('Portfolio');
+    this.titleService.setTitle('Testimonials');
     this.fetch();
   }
 
   private fetch() {
-    this.adminService.portfolio.index().subscribe({
-      next: (res) => {
-        console.log(res);
-        this.portfolios = res;
+    this.adminService.testimonial.index().subscribe({
+      next: (data) => {
+        this.testimonials = data;
         this.loading = false;
       },
       error: (err) => {
@@ -45,14 +43,14 @@ export class PortfolioComponent implements OnInit {
   }
 
   delete(id: string) {
-    if (confirm('Are you sure you want to delete this portfolio?')) {
+    if (confirm('Are you sure you want to delete this testimonial?')) {
       this.loading = true;
-      this.adminService.portfolio.delete(id).subscribe({
-        next: (res) => {
-          if (res.success) {
+      this.adminService.testimonial.delete(id).subscribe({
+        next: (data) => {
+          if (data.success) {
             this.fetch();
           }else {
-            alert(res.error);
+            alert(data.error);
             this.loading = false;
           }
         },

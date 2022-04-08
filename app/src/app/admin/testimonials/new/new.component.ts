@@ -3,8 +3,6 @@ import {Title} from "@angular/platform-browser";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {PlatformLocation} from "@angular/common";
 import {AdminService} from "../../../services/admin.service";
-import {AsyncValidator} from "../../../helpers/AsyncValidator";
-import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-new',
@@ -13,15 +11,15 @@ import {environment} from "../../../../environments/environment";
 })
 export class NewComponent implements OnInit {
   data: FormGroup = new FormGroup({
-    title: new FormControl(null, Validators.required, AsyncValidator.uniq(environment.api + '/portfolio/uniq', 'title', 'Title already exists.')),
-    github_link: new FormControl(null),
-    live_link: new FormControl(null),
+    name: new FormControl(null, Validators.required),
+    description: new FormControl(null, Validators.required),
     image: new FormControl(null, Validators.required),
   });
   clicked: boolean = false;
-  private file!: File;
   private submitted: Boolean = false;
-  loading: boolean = false;
+  loading
+    : boolean = false;
+  private file!: File;
 
   constructor(
     private readonly titleService: Title,
@@ -31,11 +29,11 @@ export class NewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.titleService.setTitle('New portfolio');
+    this.titleService.setTitle('New testimonial');
   }
 
-  change_file(event: Event) {
-    this.file = (<HTMLInputElement>event.target).files!.item(0)!;
+  onFileChange(event: Event) {
+    this.file = (event.target as HTMLInputElement).files!.item(0)!;
   }
 
   back() {
@@ -48,30 +46,25 @@ export class NewComponent implements OnInit {
       this.submitted = true;
       this.loading = true;
       let formData = new FormData();
-      formData.append('title', this.data.value.title);
-      if (this.data.get('github_link')?.value) {
-        formData.append('github_link', this.data.get('github_link')?.value);
-      }
-      if (this.data.get('live_link')?.value) {
-        formData.append('live_link', this.data.get('live_link')?.value);
-      }
+      formData.append('name', this.data.value.name);
+      formData.append('description', this.data.value.description);
       formData.append('image', this.file, this.file.name);
-      this.adminService.portfolio.new(formData).subscribe({
-        next: r => {
-          if (r.success) {
+      this.adminService.testimonial.new(formData).subscribe({
+        next: res => {
+          if (res.success) {
             this.back();
           }
           else {
             this.submitted = false;
             this.loading = false;
-            alert(r.error);
-            console.log(r);
+            alert(res.error);
           }
         },
-        error: e => {
-          console.log(e);
+        error: err => {
           this.loading = false;
+          this.clicked = false;
           this.submitted = false;
+          console.log(err);
         }
       })
     }
