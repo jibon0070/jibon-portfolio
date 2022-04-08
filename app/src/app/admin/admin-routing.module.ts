@@ -10,6 +10,7 @@ import {HeaderImageComponent} from "./header-image/header-image.component";
 import {AboutMeImageComponent} from "./about-me-image/about-me-image.component";
 import {SiteOptionsComponent} from "./site-options/site-options.component";
 import {ExperienceComponent} from "./experience/experience.component";
+import {PortfolioComponent} from "./portfolio/portfolio.component";
 
 const routes: Routes = [
   {
@@ -35,6 +36,10 @@ const routes: Routes = [
   {
     path:'experience',
     loadChildren: () => import('./experience/experience.module').then(m => m.ExperienceModule),
+  },
+  {
+    path: 'portfolio',
+    loadChildren: () => import('./portfolio/portfolio.module').then(m => m.PortfolioModule),
   },
   {
     path: 'login',

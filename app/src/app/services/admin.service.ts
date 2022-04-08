@@ -22,6 +22,9 @@ export class AdminService {
     index: ()=> this.http.get<{ id: string, title: string, experience: string; category: string }[]>(this.url + '/experience'),
     delete: (id: string) => this.http.post<{ success: boolean; error: string }>(this.url + '/experience/delete/', {id}),
   }
+  portfolio = {
+    new: (data:any) => this.http.post<{ success: boolean, error: string }>(this.url + '/portfolio/new', data),
+  }
 
   constructor(
     private readonly http: HttpClient,
