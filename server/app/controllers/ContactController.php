@@ -54,4 +54,33 @@ class ContactController extends Controller
 		}
 		$this->send->json(['url' => $url]);
 	}
+
+	public function confirmAction()
+	{
+		if (!$this->request->isGet()) $this->send->status(404);
+		$data = (object)$_GET;
+		if (!isset($data->token1) || !isset($data->token2)) $this->send->status(404);
+		$contact = (new ContactModel())->findFirst([conditions => "token1 = ? and verified = 0", bind => [$data->token1]]);
+		if (!$contact) $this->send->status(404);
+		if (!password_verify($data->token2, $contact->token2)) $this->send->status(404);
+		$contact->verified = 1;
+		$contact->save();
+		echo "
+			<div style='height: 100vh; width: 100vw; display: flex; justify-content: center; align-items: center; flex-direction: column;'>
+				<h1>Hello, " . $contact->name . "</h1>
+				<p>
+					Your email address has been verified.
+					<br>
+					<br>
+					<b>Message:</b>
+					<br>
+					" . $contact->message . "
+					<br>
+					<br>
+					<b>Email:</b>
+					<br>
+					" . $contact->email . "
+				</p>
+			</div>";
+	}
 }

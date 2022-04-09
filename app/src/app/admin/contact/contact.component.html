@@ -1,0 +1,24 @@
+<div class="admin-container">
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+        <h2>Contact List</h2>
+        <button mat-raised-button color="warn" (click)="back()">Back</button>
+    </div>
+    <div class="table-responsive" style="margin-top: 0.75em;">
+        <table class="table">
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Message</th>
+                <th></th>
+            </tr>
+            <tr *ngFor="let contact of contacts">
+                <td>{{contact.name}}</td>
+                <td>{{contact.email}}</td>
+                <td>{{contact.message}}</td>
+                <td>
+                    <button mat-mini-fab color="warn" (click)="delete(contact.id)"><mat-icon>delete</mat-icon></button>
+                </td>
+        </table>
+    </div>
+</div>
+<app-loading *ngIf="loading"></app-loading>

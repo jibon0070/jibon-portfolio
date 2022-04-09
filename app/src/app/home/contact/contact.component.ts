@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {CustomValidator} from "../../helpers/CustomValidator";
-import {ContactService} from "../../services/contact.service";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { CustomValidator } from "../../helpers/CustomValidator";
+import { ContactService } from "../../services/contact.service";
 
 @Component({
   selector: 'app-contact',
@@ -30,9 +30,11 @@ export class ContactComponent implements OnInit {
       this.loading = true;
       this.contactService.send(this.data.value).subscribe({
         next: (res) => {
-          if(res.error){
+          if (res.error) {
             alert(res.error);
-          }else if(res.success){
+          } else if (res.success) {
+            alert("Message sent successfully");
+          }else if(res.url){
             alert("Message sent successfully");
           }
           this.data.reset();
@@ -46,12 +48,16 @@ export class ContactComponent implements OnInit {
         }
       });
     }
-    else{
-      if(this.data.get('name')?.invalid){
+    else {
+      if (this.data.get('name')?.invalid) {
         alert("Name is required");
-      }else if(this.data.get('email')?.invalid){
-        alert("Email is required");
-      }else if(this.data.get('message')?.invalid){
+      } else if (this.data.get('email')?.invalid) {
+        if (this.data.get('email')?.getError('email')) {
+          alert("Email is invalid");
+        } else {
+          alert("Email is required");
+        }
+      } else if (this.data.get('message')?.invalid) {
         alert("Message is required");
       }
     }

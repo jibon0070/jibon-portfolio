@@ -214,6 +214,37 @@
 		}
 	}
 
+	class Contact extends Controller
+	{
+		public function index()
+		{
+			if(!$this->request->isGet()) $this->send->status(404);
+			$contacts = array_map(function($contact){
+				return [
+					"id" => $contact->id,
+					"name" => $contact->name,
+					"email" => $contact->email,
+					"message" => $contact->message,
+					"created_at" => date("d-m-Y", $contact->created_at)
+				];
+			}, (new ContactModel())->find([order => "id asc"]));
+			$this->send->json($contacts);
+		}
+
+		public function delete()
+		{
+			if (!$this->request->isPost()) $this->send->status(404);
+			if ($this->auth->error()) $this->send->status(401);
+			$data = $this->request->get();
+			if (!isset($data->id)) $this->send->status(401);
+			$contact = (new ContactModel())->findById($data->id);
+			if (!$contact) $this->send->json(["error" => "Contact does not exist"]);
+			if (!$contact->delete()) $this->send->json(["error" => "Error deleting contact"]);
+			$this->send->json([success => true]);
+		}
+	}
+	
+
 	class AdminController extends Controller
 	{
 		public function headerImageAction()
@@ -310,5 +341,12 @@
 			elseif ($params[0] == 'new') $testimonial_controller->new();
 			elseif ($params[0] == 'delete') $testimonial_controller->delete();
 			$this->send->status(404);
+		}
+
+		public function contactAction($params)
+		{
+			$contact_controller = new Contact();
+			if (!count($params) || $params[0] == '' || $params[0] == 'index') $contact_controller->index();
+			elseif ($params[0] == 'delete') $contact_controller->delete();
 		}
 	}

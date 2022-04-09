@@ -13,6 +13,6 @@ export class ContactService {
   ) { }
 
   send(value: any) {
-    return this.http.post<{ success: boolean, error: string, }>(this.url + '/send', value);
+    return this.http.post<{ success: boolean, error: string, url: string }>(this.url + '/send', value);
   }
 }

@@ -1,3 +1,4 @@
+import { MatIconModule } from '@angular/material/icon';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -13,6 +14,7 @@ import { FirstTimeComponent } from './first-time/first-time.component';
 import { HeaderImageComponent } from './header-image/header-image.component';
 import { AboutMeImageComponent } from './about-me-image/about-me-image.component';
 import { SiteOptionsComponent } from './site-options/site-options.component';
+import { ContactComponent } from './contact/contact.component';
 
 
 @NgModule({
@@ -24,6 +26,7 @@ import { SiteOptionsComponent } from './site-options/site-options.component';
     HeaderImageComponent,
     AboutMeImageComponent,
     SiteOptionsComponent,
+    ContactComponent,
   ],
   imports: [
     CommonModule,
@@ -31,7 +34,8 @@ import { SiteOptionsComponent } from './site-options/site-options.component';
     MatCardModule,
     ReactiveFormsModule,
     CommonsModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule
   ]
 })
 export class AdminModule { }

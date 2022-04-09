@@ -11,6 +11,7 @@ import {AboutMeImageComponent} from "./about-me-image/about-me-image.component";
 import {SiteOptionsComponent} from "./site-options/site-options.component";
 import {ExperienceComponent} from "./experience/experience.component";
 import {PortfolioComponent} from "./portfolio/portfolio.component";
+import { ContactComponent } from './contact/contact.component';
 
 const routes: Routes = [
   {
@@ -44,6 +45,10 @@ const routes: Routes = [
   {
     path:'testimonials',
     loadChildren: () => import('./testimonials/testimonials.module').then(m => m.TestimonialsModule),
+  },
+  {
+    path: 'contact',
+    component: ContactComponent,
   },
   {
     path: 'login',
