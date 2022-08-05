@@ -22,6 +22,7 @@ $url = isset($_SERVER['PATH_INFO']) ? explode('/', ltrim($_SERVER['PATH_INFO'], 
 
 //require config file
 require_once(root . ds . 'config' . ds . 'config.php');
+require_once(root . ds . 'core' . ds . 'const.php');
 
 //autoload classed
 function autoload($className)
