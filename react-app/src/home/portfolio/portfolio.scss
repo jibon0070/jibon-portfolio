@@ -1,0 +1,55 @@
+@import "../../variables";
+
+#portfolio {
+  .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2.5rem;
+
+    .item {
+      background: $color-bg-variant;
+      padding: 1.2rem;
+      border-radius: 2rem;
+      border: 1px solid transparent;
+      transition: $transition;
+
+      &:hover {
+        border: 1px solid $color-primary;
+        background: $color-bg;
+      }
+
+      .item-image {
+        border-radius: 1.5rem;
+        overflow: hidden;
+
+        img {
+          aspect-ratio: 16/9;
+          object-fit: cover;
+        }
+      }
+
+      h3 {
+        margin: 1.2rem 0 2rem;
+      }
+
+      .cta {
+        display: flex;
+        gap: 1rem;
+      }
+    }
+  }
+
+  @media screen and(max-width: 1024px) {
+    .container {
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+    }
+  }
+
+  @media screen and(max-width: 768px) {
+    .container {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+  }
+}

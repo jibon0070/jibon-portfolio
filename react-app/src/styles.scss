@@ -1,0 +1,188 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "variables.scss";
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+html {
+  scroll-behavior: smooth !important;
+  //mat-icon{
+  //  display: inline-block;
+  //  //justify-content: center;
+  //  //align-items: center;
+  //}
+
+
+  body {
+
+    height: 100%;
+    //background: $color-bg;
+    color: $color-white;
+    line-height: 1.7em;
+    background-image: url("../public/assets/background.webp");
+    background-size: 8px 8px;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+
+    .mat-icon {
+      background-repeat: no-repeat;
+      display: inline-block !important;
+      fill: currentColor;
+      height: 24px;
+      width: 24px;
+      vertical-align: middle;
+    }
+
+    .container {
+      width: $container-width-lg;
+      margin: 0 auto;
+    }
+
+    .admin-container {
+      max-width: calc(786px + 2em);
+      margin: 0 auto;
+      padding: 1em;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-weight: 500;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+    }
+
+    section {
+      margin-top: 8rem;
+      min-height: 100vh;
+
+      h2, h5 {
+        text-align: center;
+        color: $color-light;
+      }
+
+      h2 {
+        color: $color-primary;
+        margin-bottom: 3rem;
+      }
+    }
+
+    .text-light {
+      color: $color-light;
+    }
+
+    a {
+      color: $color-primary;
+      transition: $transition;
+
+      &:hover {
+        color: $color-white;
+      }
+    }
+
+    .btn {
+      width: max-content;
+      display: inline-block;
+      color: $color-primary;
+      padding: 0.75rem 1.2rem;
+      border-radius: 0.4rem;
+      cursor: pointer;
+      border: 1px solid $color-primary;
+      transition: $transition;
+
+      &:hover {
+        background: $color-white;
+        color: $color-bg;
+        border-color: transparent;
+      }
+    }
+
+    .btn-primary {
+      background: $color-primary;
+      color: $color-bg;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .align-right {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: .75em;
+    }
+
+    .align-center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: .75em;
+    }
+
+    .table-responsive {
+      display: block;
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      border-spacing: 0;
+      display: table;
+
+      td, th {
+        padding: .75rem;
+        vertical-align: top;
+        border-top: 1px solid #dee2e6;
+        text-align: center;
+      }
+
+      tr:last-child {
+        td {
+          border-bottom: 1px solid #dee2e6;
+        }
+      }
+    }
+  }
+}
+
+
+*, *:before, *:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  list-style: none;
+  text-decoration: none;
+}
+
+
+@media screen and(max-width: 1024px) {
+  .container {
+    width: $container-width-md;
+  }
+
+  section {
+    margin-top: 6rem;
+  }
+}
+
+
+@media screen and(max-width: 600px) {
+  .container {
+    width: $container-width-sm;
+  }
+
+  section {
+    h2 {
+      margin-bottom: 2rem;
+    }
+  }
+}

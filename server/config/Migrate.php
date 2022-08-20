@@ -40,10 +40,8 @@ class Migrate
             array_shift($temp_table_name);
             $temp_table_name = strtolower(implode("_", $temp_table_name));
             $model = new $model();
-            $model = array_keys((array)$model);
+            $model = array_keys(get_object_vars($model));
             array_shift($model);
-            array_pop($model);
-            array_pop($model);
             $tables[] = (object)["table_name" => $temp_table_name, "model" => $model];
         }
         $db_tables = array_map(function ($row) use ($db_name) {

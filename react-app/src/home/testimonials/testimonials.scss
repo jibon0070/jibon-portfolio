@@ -1,0 +1,54 @@
+@import "../../variables";
+
+
+// @import "~swiper/css";
+// @import "~swiper/css/navigation";
+
+#testimonials {
+  .container {
+    width: 40%;
+
+    .testimonial {
+      background: $color-bg-variant;
+      text-align: center;
+      padding: 2rem;
+      user-select: none;
+      border-radius: 2rem;
+
+      .avatar {
+        img {
+          width: 4rem;
+          aspect-ratio: 1/1;
+          object-fit: cover;
+          overflow: hidden;
+          border-radius: 50%;
+          margin: 0 auto 1rem;
+          border: 0.4rem solid $color-primary-variant;
+        }
+      }
+
+      .review {
+        color: $color-light;
+        display: block;
+        width: 80%;
+        margin: 0.8rem auto 0;
+      }
+    }
+  }
+
+  @media screen and (max-width: 1024px) {
+    .container {
+      width: 60%;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .container {
+      width: $container-width-sm;
+
+      .review {
+        width: $container-width-sm;
+      }
+    }
+  }
+}

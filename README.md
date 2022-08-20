@@ -24,6 +24,8 @@ if you want to use this design and functionality, you can follow the instruction
 
 ---
 
+# Temporarily incompatible due to development progress
+
 1. Clone the repository.
 2. Install required software. (Skip if pre installed)
 3. Open a terminal in the project directory.

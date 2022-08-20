@@ -1,0 +1,82 @@
+@import "../../variables";
+
+#header {
+  header {
+    overflow: hidden;
+  }
+
+  .container {
+    padding-top: 7rem;
+    text-align: center;
+    height: 100vh;
+    position: relative;
+
+    .cta {
+      margin-top: 2.5rem;
+      display: flex;
+      gap: 1.2rem;
+      justify-content: center;
+    }
+
+    .social {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .8rem;
+      position: absolute;
+      left: 0;
+      bottom: 3rem;
+
+      &::after {
+        content: '';
+        width: 1px;
+        height: 2rem;
+        background: $color-primary;
+      }
+
+      img {
+        display: inline;
+        height: 1em;
+        width: 1em;
+      }
+    }
+
+    .me {
+      background: linear-gradient($color-primary, transparent);
+      width: 22rem;
+      height: 30rem;
+      position: absolute;
+      left: calc(50% - 11rem);
+      margin-top: 4rem;
+      border-radius: 11rem 11rem 0 0;
+    }
+
+    .scroll_down {
+      position: absolute;
+      right: -2.3rem;
+      bottom: 5rem;
+      transform: rotate(90deg);
+    }
+  }
+
+
+  @media screen and (max-width: 1024px) {
+    .container {
+      height: 68vh;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .container {
+      height: 100vh;
+
+      .social {
+        display: none;
+      }
+
+      .scroll_down {
+        display: none;
+      }
+    }
+  }
+}

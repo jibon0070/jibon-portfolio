@@ -48,4 +48,9 @@ class Helpers
         # and not before the end: $
         return preg_split('/(?<!^)(?!$)/u', $string);
     }
+
+    public static function is_production()
+    {
+        return preg_match($_SERVER['HTTP_HOST'], '/\.local$/');
+    }
 }

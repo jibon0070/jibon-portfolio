@@ -39,14 +39,20 @@ class DB
      */
     private function __construct()
     {
+
+        // Helpers::dnd(new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASSWORD));
         try {
-            $this->_pdo = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASSWORD, DB_OPTIONS);
-//            $this->_pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->_pdo = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASSWORD, [PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8' "]);
+            $this->_pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->_pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->_pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-
         } catch (PDOException $e) {
-            echo json_encode($e->getMessage());
+            echo json_encode([
+                "message" => $e->getMessage(),
+                "code" => $e->getCode(),
+                "file name" => $e->getFile(),
+                "line number" => $e->getLine()
+            ]);
             exit();
         }
     }

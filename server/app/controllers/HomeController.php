@@ -4,7 +4,7 @@
 	{
 		public function indexAction()
 		{
-			if (!$this->request->isGet()) $this->send->status(404);
+            if (!$this->request->isGet()) $this->send->status(404);
             $header_image = (new SiteOptionsModel())->findFirst(['conditions' => 'name = ?', 'bind' => ['header_image']]);
             if (!$header_image) $header_image = null;
             else $header_image = $header_image->option_value;
