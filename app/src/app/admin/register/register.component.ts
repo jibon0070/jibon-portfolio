@@ -41,7 +41,7 @@ export class RegisterComponent implements OnInit {
           if (r.success)this.back();
         },
         error: (e) => {
-          console.log(e);
+          console.error(e);
           this.loading = false;
           this.submitted = false;
         }

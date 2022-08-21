@@ -45,7 +45,7 @@ export class FirstTimeComponent implements OnInit {
           this.loading = false;
         },
         error: (err) => {
-          console.log(err);
+          console.error(err);
           this.loading = false;
         }
       });
@@ -71,7 +71,7 @@ export class FirstTimeComponent implements OnInit {
         error: (err) => {
           this.loading = false;
           this.submitted = false;
-          console.log(err);
+          console.error(err);
         }
       });
     }

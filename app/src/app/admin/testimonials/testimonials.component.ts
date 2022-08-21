@@ -32,7 +32,7 @@ export class TestimonialsComponent implements OnInit {
         this.loading = false;
       },
       error: (err) => {
-        console.log(err);
+        console.error(err);
         this.loading = false;
       }
     });
@@ -55,7 +55,7 @@ export class TestimonialsComponent implements OnInit {
           }
         },
         error: (err) => {
-          console.log(err);
+          console.error(err);
           this.loading = false;
         }
       });

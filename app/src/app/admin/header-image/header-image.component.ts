@@ -59,11 +59,11 @@ export class HeaderImageComponent implements OnInit {
           }else{
             this.submitted = false;
             this.loading = false;
-            console.log(res);
+            console.error(res);
           }
         },
         error: (err) => {
-          console.log(err);
+          console.error(err);
           this.loading = false;
           this.submitted = false;
         }

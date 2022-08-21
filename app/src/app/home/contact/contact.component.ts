@@ -44,7 +44,7 @@ export class ContactComponent implements OnInit {
         error: (err) => {
           this.submitted = false;
           this.loading = false;
-          console.log(err);
+          console.error(err);
         }
       });
     }

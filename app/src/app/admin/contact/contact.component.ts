@@ -27,7 +27,7 @@ export class ContactComponent implements OnInit {
       },
       error: (err) => {
         this.loading = false;
-        console.log(err);
+        console.error(err);
         
       }
     })
@@ -52,7 +52,7 @@ export class ContactComponent implements OnInit {
         },
         error: (err) => {
           this.loading = false;
-          console.log(err);
+          console.error(err);
         }
       });
     }

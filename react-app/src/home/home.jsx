@@ -5,6 +5,7 @@ import HomeService from "../services/home.service.js";
 import PortfolioService from "../services/portfolio.service.js";
 import TestimonialsService from "../services/testimonials.service.js";
 import About from "./about/about.jsx";
+import Contact from "./contact/contact.jsx";
 import Experience from "./experience/experience.jsx";
 import Header from "./header/header.jsx";
 import Portfolio from "./portfolio/portfolio.jsx";
@@ -42,12 +43,17 @@ export default class Home extends React.Component {
   render() {
     return (
       <div id="home">
-        <Nav />
+        <Nav state={this.state} />
         <Header header_image={this.state.header_image} />
         <About experience={this.state.about_experience} clients={this.state.about_clients} projects={this.state.about_projects} about_me_image={this.state.about_me_image} />
         <Experience experiences={this.state.experiences} />
         <Portfolio portfolios={this.state.portfolios} />
         <Testimonials testimonials={this.state.testimonials} />
+        {
+          process.env.NODE_ENV === 'development' ?
+            <Contact /> :
+            null
+        }
       </div>
     );
   }

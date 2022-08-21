@@ -1,0 +1,64 @@
+#contact {
+    @import "../../variables.scss";
+
+    .container {
+        width: 58%;
+        display: grid;
+        grid-template-columns: 30% 58%;
+        gap: 12%;
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+
+            .option {
+                background: $color-bg-variant;
+                padding: 1.2rem;
+                border-radius: 1.2rem;
+                text-align: center;
+                border: 1px solid transparent;
+                transition: $transition;
+
+                &:hover {
+                    border: 1px solid $color-primary-variant;
+                    background: $color-bg;
+                }
+            }
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+
+            input,
+            textarea {
+                width: 100%;
+                padding: 1.5rem;
+                border-radius: .5rem;
+                background: transparent;
+                border: 2px solid $color-primary-variant;
+                resize: vertical;
+                color: $color-white;
+                &::placeholder {
+                    color: $color-light;
+                }
+            }
+        }
+    }
+
+    @media screen and (max-width: 1024px) {
+        .container {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        .container {
+            width: $container-width-sm;
+        }
+    }
+
+}

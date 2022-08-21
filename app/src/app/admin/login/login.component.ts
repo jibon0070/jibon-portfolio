@@ -80,12 +80,11 @@ export class LoginComponent implements OnInit {
               this.data.get('username')?.setErrors({'username': 'Email not verified.'});
             }
           }
-          console.log(res);
           this.loading = false;
           this.submitted = false;
         },
         error: (err) => {
-          console.log(err);
+          console.error(err);
           this.loading = false;
           this.submitted = false;
         }

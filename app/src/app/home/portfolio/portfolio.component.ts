@@ -23,7 +23,7 @@ export class PortfolioComponent implements OnInit {
         this.loading = false;
       },
       error: (err) => {
-        console.log(err);
+        console.error(err);
         this.loading = false;
       }
     });
