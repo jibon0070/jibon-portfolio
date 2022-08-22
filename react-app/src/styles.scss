@@ -17,13 +17,41 @@ html {
 
   body {
 
+    .form-group {
+      .form-control {
+        width: 100%;
+        padding: 1.5rem;
+        border-radius: .5rem;
+        background: transparent;
+        border: 2px solid $color-primary-variant;
+        resize: vertical;
+        color: $color-white;
+
+        &::placeholder {
+          color: $color-light;
+        }
+
+        &.is-invalid {
+          border-color: red;
+        }
+
+      }
+
+      .invalid-feedback {
+        color: red;
+        font-size: 0.7em;
+      }
+    }
+
     height: 100%;
     //background: $color-bg;
     color: $color-white;
     line-height: 1.7em;
     background-image: url("../public/assets/background.webp");
     background-size: 8px 8px;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-family: Roboto,
+    "Helvetica Neue",
+    sans-serif;
 
     .mat-icon {
       background-repeat: no-repeat;
@@ -45,7 +73,12 @@ html {
       padding: 1em;
     }
 
-    h1, h2, h3, h4, h5, h6 {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
       font-weight: 500;
     }
 
@@ -57,7 +90,8 @@ html {
       margin-top: 8rem;
       min-height: 100vh;
 
-      h2, h5 {
+      h2,
+      h5 {
         text-align: center;
         color: $color-light;
       }
@@ -137,7 +171,8 @@ html {
       border-spacing: 0;
       display: table;
 
-      td, th {
+      td,
+      th {
         padding: .75rem;
         vertical-align: top;
         border-top: 1px solid #dee2e6;
@@ -154,7 +189,9 @@ html {
 }
 
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;

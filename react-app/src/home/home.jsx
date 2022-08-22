@@ -1,5 +1,5 @@
 import React from "react";
-import Nav from "../nav/nav.jsx";
+import Nav from "./nav/nav.jsx";
 import ExperienceService from "../services/experience.service.js";
 import HomeService from "../services/home.service.js";
 import PortfolioService from "../services/portfolio.service.js";

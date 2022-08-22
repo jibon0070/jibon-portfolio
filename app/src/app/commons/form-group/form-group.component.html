@@ -1,18 +1,21 @@
 <ng-container [formGroup]="form" style="width: 100%;">
   <mat-form-field class="form-group" hideRequiredMarker appearance="outline" color="primary" style="width: 100%;">
     <mat-label>{{label}}</mat-label>
-    <input (change)="change_call()" [matAutocomplete]="auto" [errorStateMatcher]="customErrorStateMatcher" matInput [placeholder]="placeholder" [accept]="accept" *ngIf="type != 'select' && type != 'textarea'"
-           [type]="type" [id]="identification" class="form-control" [formControlName]="fcn">
+    <input (change)="change_call()" [matAutocomplete]="auto" [errorStateMatcher]="customErrorStateMatcher" matInput
+      [placeholder]="placeholder" [accept]="accept" *ngIf="type != 'select' && type != 'textarea'" [type]="type"
+      [id]="identification" class="form-control" [formControlName]="fcn">
     <mat-icon style="cursor:pointer;" *ngIf="icon" (click)="icon_click_internal()" matSuffix>{{icon}}</mat-icon>
     <mat-autocomplete #auto="matAutocomplete">
       <mat-option value="{{option.value}}" *ngFor="let option of opts">{{option.account}}</mat-option>
     </mat-autocomplete>
-    <mat-select (change)="change_call()" [multiple]="multiple" [errorStateMatcher]="customErrorStateMatcher" *ngIf="type == 'select'" class="form-control" [id]="identification" [formControlName]="fcn">
+    <mat-select (change)="change_call()" [multiple]="multiple" [errorStateMatcher]="customErrorStateMatcher"
+      *ngIf="type == 'select'" class="form-control" [id]="identification" [formControlName]="fcn">
       <mat-option *ngIf="!multiple">Select {{label}}</mat-option>
       <mat-option value="{{opt.value}}" *ngFor="let opt of opts">{{opt.account}}</mat-option>
     </mat-select>
-    <textarea (change)="change_call()" [errorStateMatcher]="customErrorStateMatcher" matInput *ngIf="type == 'textarea'" [id]="identification" rows="5" style="resize: vertical" class="form-control"
-              [formControlName]="fcn" [placeholder]="placeholder"></textarea>
+    <textarea (change)="change_call()" [errorStateMatcher]="customErrorStateMatcher" matInput *ngIf="type == 'textarea'"
+      [id]="identification" rows="5" style="resize: vertical" class="form-control" [formControlName]="fcn"
+      [placeholder]="placeholder"></textarea>
     <mat-error *ngIf="form.get(fcn)?.errors?.['required']">{{label}} is required.</mat-error>
     <mat-error *ngIf="form.get(fcn)?.errors?.['requiredAny']">{{form.get(fcn)?.errors?.['requiredAny']}}</mat-error>
     <mat-error *ngIf="form.get(fcn)?.errors?.['notNegative']">{{form.get(fcn)?.errors?.['notNegative']}}</mat-error>

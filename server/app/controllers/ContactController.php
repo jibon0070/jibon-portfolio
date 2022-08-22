@@ -5,7 +5,7 @@ class ContactController extends Controller
 	public function sendAction()
 	{
 		if (!$this->request->isPost()) $this->send->status(404);
-		if ($this->auth->error()) $this->send->status(401);
+		// if ($this->auth->error()) $this->send->status(401);
 		$data = $this->request->get();
 		if (
 			!isset($data->name) ||
@@ -52,6 +52,7 @@ class ContactController extends Controller
 			H::sendMail("A.R. Jibon", "atikurrahaman386@gmail.com", $contact->email, "Contact Form", $message);
 			$this->send->json([success => true]);
 		}
+		$url = preg_replace('/^https/', 'http', $url);
 		$this->send->json(['url' => $url]);
 	}
 

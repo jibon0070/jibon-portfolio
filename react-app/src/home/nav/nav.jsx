@@ -5,7 +5,7 @@ export default class Nav extends React.Component {
         return (
             <div id="nav">
                 <nav>
-                    <a title='Home' href="#"><i className="fa-solid fa-house"></i></a>
+                    <a title='Home' href="#home"><i className="fa-solid fa-house"></i></a>
                     <a href="#about" title='About Me'><i className="fa-solid fa-circle-info"></i></a>
                     {
                         this.props.state.experiences?.frontend?.length || this.props.state.experiences?.backend?.length ?

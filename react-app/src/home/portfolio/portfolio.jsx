@@ -14,18 +14,18 @@ export default class Portfolio extends React.Component {
                                 return (
                                     <article key={index} className="item" >
                                         <div className="item-image">
-                                            <img src={Config.api + portfolio.image_link} alt="Broken {{portfolio.title}} image" />
+                                            <img src={Config.api + portfolio.image_link} alt="Broken {{portfolio.title}}" />
                                         </div>
                                         <h3>{portfolio?.title}</h3>
                                         <div className="cta">
                                             {
                                                 portfolio?.github_link ?
-                                                    (<a href={portfolio?.github_link} target="_blank" className="btn">Github</a>) :
+                                                    (<a href={portfolio?.github_link} target="_blank" rel="noreferrer" className="btn">Github</a>) :
                                                     null
                                             }
                                             {
                                                 portfolio?.live_link ?
-                                                    (<a href={portfolio.live_link} target="_blank" className="btn btn-primary">Live</a>) :
+                                                    (<a href={portfolio.live_link} target="_blank" rel="noreferrer" className="btn btn-primary">Live</a>) :
                                                     null
                                             }
                                         </div>
