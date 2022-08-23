@@ -1,5 +1,6 @@
 import React from "react";
 import "./header.scss";
+import Config from "../../Config";
 export default class Header extends React.Component {
     state = {
         name: 'A.R. Jibon'
@@ -17,7 +18,7 @@ export default class Header extends React.Component {
                             <a href="#contact" className="btn btn-primary">Let's Talk</a>
                         </div>
                         <div className="me">
-                            <img src={this.props.header_image ?? '/assets/me.png'} alt="broken me" />
+                            <img src={this.props.header_image ? Config.api + this.props.header_image : '/assets/me.png'} alt="broken me" />
                         </div>
                         <a style={{cursor: 'pointer'}} href="#contact" className="scroll_down">Scroll Down</a>
                         <div className="social">

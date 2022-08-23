@@ -17,6 +17,92 @@ html {
 
   body {
 
+    .text-center {
+      margin: auto;
+    }
+
+    .col-md-1 {
+      width: calc(100% / 12 * 1);
+    }
+
+    .col-md-2 {
+      width: calc(100% / 12 * 2);
+    }
+
+    .col-md-3 {
+      width: calc(100% / 12 * 3);
+    }
+
+    .col-md-4 {
+      width: calc(100% / 12 * 4);
+    }
+
+    .col-md-5 {
+      width: calc(100% / 12 * 5);
+    }
+
+    .col-md-6 {
+      width: calc(100% / 12 * 6);
+    }
+
+    .col-md-7 {
+      width: calc(100% / 12 * 7);
+    }
+
+    .col-md-8 {
+      width: calc(100% / 12 * 8);
+    }
+
+    .col-md-9 {
+      width: calc(100% / 12 * 9);
+    }
+
+    .col-md-10 {
+      width: calc(100% / 12 * 10);
+    }
+
+    .col-md-11 {
+      width: calc(100% / 12 * 11);
+    }
+
+    .col-md-12 {
+      width: calc(100% / 12 * 12);
+    }
+
+    .mt-1 {
+      margin-top: .25em;
+    }
+
+    .mt-2 {
+      margin-top: .5em;
+    }
+
+    .mt-3 {
+      margin-top: .75em;
+    }
+
+    .mt-4 {
+      margin-top: 1em;
+    }
+
+    .mt-5 {
+      margin-top: 1.25em;
+    }
+
+    .card {
+      border: 3px solid $color-primary;
+      border-radius: 8px;
+      .card-header {
+        padding: 1em;
+        font-size: 2em;
+        text-align: center;
+        border-bottom: 3px solid $color-primary;
+      }
+      .card-body{
+        padding: 1em;
+      }
+    }
+
     .form-group {
       .form-control {
         width: 100%;
@@ -116,14 +202,14 @@ html {
     }
 
     .btn {
-      width: max-content;
-      display: inline-block;
       color: $color-primary;
-      padding: 0.75rem 1.2rem;
+      font-size: 1em;
+      padding: .5em 1em;
       border-radius: 0.4rem;
       cursor: pointer;
       border: 1px solid $color-primary;
       transition: $transition;
+      //display: inline-block;
 
       &:hover {
         background: $color-white;

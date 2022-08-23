@@ -1,83 +1,32 @@
-import React from "react";
+import React, {createRef} from "react";
 import "./form-group.scss";
+
 export default class FormGroup extends React.Component {
+    ref = createRef();
     state = {
-        value: "",
-        errors: {},
-        dirty: false,
-        touched: false
+        touched: false, dirty: false, valid: false, errors: {}
     }
-    onChange(value) {
-        this.setState({ value: value }, async () => {
-            let errors = {};
-            if (this.props.validators)
-                for (let validatorFn of this.props.validators) {
-                    const error = await validatorFn(value);
-                    if (error)
-                        errors = { ...error };
-                }
-            if (this.props.asyncValidators) {
-                for (let asyncValidatorFn of this.props.asyncValidators) {
-                    const error = await asyncValidatorFn(this.state.value);
-                    if (error)
-                        errors = { ...error };
-                }
-            }
-            this.setState({ errors }, () => {
-                this.props.onValueChange?.({ value: this.state.value, valid: !Object.keys(this.state.errors).length });
-            });
-        });
-    }
+
     componentDidMount() {
-        if (this.props.value)
-            this.setState({ value: this.props.value }, () => {
-                this.onChange(this.state.value);
-            });
-        else
-            this.onChange(this.state.value);
+        if (!this.props.form_control || !this.props.name) throw new DOMException('Invalid implementation of form group');
+        this.props.form_control.set_ref_and_state(this.ref, this.setState.bind(this))
     }
+
+
     render() {
-        return (
-            <div id="form-group" className="form-group">
-                {
-                    this.props.type !== "textarea" ?
-                        (
-                            <input className={(((Object.keys(this.state.errors).length && (this.state.dirty || this.state.touched)) || (Object.keys(this.state.errors).length && this.props.clicked)) ? 'is-invalid ' : '') + 'form-control'} placeholder={this.props.name} onChange={e => {
-                                const value = e.target.value;
-                                // console.log(value);
-                                this.setState({ dirty: true }, () => {
-                                    this.onChange(value);
-                                })
-                            }} onBlur={() => {
-                                this.setState({ touched: true })
-                            }} type={this.props.type} value={this.props.value} />
-                        ) :
-                        (
-                            <textarea className={(((Object.keys(this.state.errors).length && (this.state.dirty || this.state.touched)) || (Object.keys(this.state.errors).length && this.props.clicked)) ? 'is-invalid ' : '') + 'form-control'} placeholder={this.props.name} value={this.props.value} onChange={e => {
-                                const value = e.target.value;
-                                this.setState({ dirty: true }, () => {
-                                    this.onChange(value);
-                                })
-                            }} onBlur={() => this.setState({touched: true})}></textarea>
-                        )
-                }
-                {
-                    ((Object.keys(this.state.errors).length && (this.state.dirty || this.state.touched)) || (Object.keys(this.state.errors).length && this.props.clicked)) ?
-                        (<div className="invalid-feedback">
-                            {
-                                Object.keys(this.state.errors).includes('required') ?
-                                    (<span>{this.props.name} is requied.</span>) :
-                                    null
-                            }
-                            {
-                                Object.keys(this.state.errors).includes('email') ?
-                                    (<span>{this.state.errors.email}</span>) :
-                                    null
-                            }
-                        </div>)
-                        : null
-                }
-            </div>
-        )
+        return (<div id="form-group" className={this.props.className + " form-group"}>
+                <input autoComplete="new-password" ref={this.ref} type={this.props.type ?? 'text'}
+                       placeholder={this.props.name}
+                       onChange={this.props.form_control.on_change}
+                       className={((!this.state.valid && (this.state.dirty || this.state.touched)) || (!this.state.valid && this.props.clicked) ? 'is-invalid ' : '') + 'form-control'}
+                       onBlur={this.props.form_control.on_blur}
+                />
+                {(!this.state.valid && (this.state.dirty || this.state.touched)) || (!this.state.valid && this.props.clicked) ? <div className="invalid-feedback">
+                    {Object.keys(this.state.errors).includes('required') ? <span>{this.props.name} is required.</span> : null}
+                    {Object.keys(this.state.errors).includes('username') ? <span>{this.state.errors.username}</span> : null}
+                    {Object.keys(this.state.errors).includes('password') ? <span>{this.state.errors.password}</span> : null}
+                    {/*{JSON.stringify(this.state.errors)}*/}
+                </div> : null}
+            </div>)
     }
 }

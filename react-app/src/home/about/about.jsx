@@ -1,5 +1,6 @@
 import React from "react";
 import './about.scss';
+import Config from "../../Config";
 export default class About extends React.Component {
 
     render() {
@@ -11,7 +12,7 @@ export default class About extends React.Component {
                     <div className="container">
                         <div className="me">
                             <div className="me-image">
-                                <img src={this.props.about_me_image ?? process.env.PUBLIC_URL + '/assets/me2.png'} alt="Broken me 2" />
+                                <img src={this.props.about_me_image ? Config.api + this.props.about_me_image :'/assets/me2.png'} alt="Broken me 2" />
                             </div>
                         </div>
                         <div className="content">

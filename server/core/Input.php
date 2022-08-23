@@ -77,7 +77,7 @@ class Input
      * @param bool $debug
      * @return array
      */
-    public function upload(array $file, $allowed, string $path, int $maxSizeMb, bool $debug = false): array
+    public function upload($file, $allowed, $path, $maxSizeMb, $debug = false)
     {
         $fileName = $file['name'];
         $fileError = $file['error'];
@@ -113,5 +113,13 @@ class Input
                 'error' => 'File extension ".' . $fileExt . '" is not allowed'
             ];
         }
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDelete()
+    {
+        return $this->getRequestMethod() === 'DELETE';
     }
 }

@@ -35,8 +35,12 @@ export default class Contact extends React.Component {
                     if(res.success){
                         alert("Your message was stored successfully. To verify your message, please check your email.");
                         this.setState({loading: false, submitted: false});
+                        e.target.reset()
                     }else if(res.url){
                         window.location.href = res.url;
+                    }else if (res.error){
+                        alert(res.error)
+                        this.setState({loading: false, submitted: false});
                     }
                 }).catch(err => {
                     console.error(err);
@@ -78,9 +82,9 @@ export default class Contact extends React.Component {
                         </div>
                     </div>
                     <form /* [formGroup]="data" (ngSubmit)="submit()" */ onSubmit={(e) => this.submit(e)}>
-                        <FormGroup clicked={this.state.clicked} name="Your Full Name" type="text" validators={[Validators.required]} onValueChange={e => this.setValue('name', e)} />
-                        <FormGroup clicked={this.state.clicked} name="Email" type="email" validators={[Validators.required, Validators.email]} onValueChange={e => this.setValue('email', e)} />
-                        <FormGroup clicked={this.state.clicked} name="Your Message" type="textarea" validators={[Validators.required]} onValueChange={e => this.setValue('message', e)} />
+                        {/*<FormGroup clicked={this.state.clicked} name="Your Full Name" type="text" validators={[Validators.required]} onValueChange={e => this.setValue('name', e)} />*/}
+                        {/*<FormGroup clicked={this.state.clicked} name="Email" type="email" validators={[Validators.required, Validators.email]} onValueChange={e => this.setValue('email', e)} />*/}
+                        {/*<FormGroup clicked={this.state.clicked} name="Your Message" type="textarea" validators={[Validators.required]} onValueChange={e => this.setValue('message', e)} />*/}
                         <button type="submit" className="btn btn-primary">Send</button>
                     </form>
                 </div>
