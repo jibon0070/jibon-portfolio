@@ -3,7 +3,6 @@ import Config from './../Config.js';
 export default class ContactService {
     static #url = Config.api + '/contact';
     static sendMessage(data) {
-        console.log(data);
         return fetch(this.#url + '/send', {
             method: 'POST',
             headers: {

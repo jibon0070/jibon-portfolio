@@ -6,15 +6,18 @@ import './styles.scss';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Admin from "./admin/admin";
 import Auth from "./auth/auth";
+import PageNotFound from "./commons/page-not-found/page-not-found";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
         <BrowserRouter>
             <Routes>
-                <Route path='/' element={<Home/>}/>
-                <Route path='/admin/*' element={<Admin/>}/>
-                <Route path='/auth/*' element={<Auth/>}/>
+                <Route path='' element={<Home/>}/>
+                <Route path='admin/*' element={<Admin/>}/>
+                <Route path='auth/*' element={<Auth/>}/>
+
+                <Route path={'*'} element={<PageNotFound/>}/>
             </Routes>
         </BrowserRouter>
     </React.StrictMode>

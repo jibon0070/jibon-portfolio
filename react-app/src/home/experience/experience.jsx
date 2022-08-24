@@ -23,7 +23,7 @@ export default class Experience extends React.Component {
                                                         <i className="fa-solid fa-certificate"></i>
                                                         <div>
                                                             <h4>{experience.title}</h4>
-                                                            <small className="text-light">{experience.experience}</small>
+                                                            <small className="text-light">{experience.experience} Years+</small>
                                                         </div>
                                                     </article>
                                                 )
@@ -42,7 +42,7 @@ export default class Experience extends React.Component {
                                                     <i className="fa-solid fa-certificate"></i>
                                                     <div>
                                                         <h4>{experience.title}</h4>
-                                                        <small className="text-light">{experience.experience}</small>
+                                                        <small className="text-light">{experience.experience} Years+</small>
                                                     </div>
                                                 </article>
                                             )

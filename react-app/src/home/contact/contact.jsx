@@ -4,34 +4,32 @@ import Loading from "../../commons/loading/loading.jsx";
 import ContactService from "../../services/contact.service.js";
 import Validators from "../../validators/validators.js";
 import './contact.scss';
+import ReactiveForm from "../../reactive-form/reactive-form";
+import FormControl from "../../reactive-form/form-control";
 
 export default class Contact extends React.Component {
 
-    data = {
-        name: "",
-        email: "",
-        message: ""
-    }
-
-    valid = {
-        name: false,
-        email: false,
-        message: false
-    }
+    data = new ReactiveForm({
+        name : new FormControl('', [Validators.required]),
+        email: new FormControl('', [Validators.required, Validators.email]),
+        message: new FormControl('', [Validators.required])
+    })
 
     state = {
-        clicked: false,
         loading: false,
+        clicked: false,
         submitted: false
     }
 
-
+    /**
+     * @param {Event<HTMLFormElement>} e
+     */
     submit(e) {
         e.preventDefault();
         this.setState({ clicked: true });
-        if (!Object.values(this.valid).includes(false) && !this.submitted) {
+        if (this.data.valid && !this.state.submitted) {
             this.setState({submitted: true, loading: true}, () => {
-                ContactService.sendMessage(this.data).then((res) => {
+                ContactService.sendMessage(this.data.value).then((res) => {
                     if(res.success){
                         alert("Your message was stored successfully. To verify your message, please check your email.");
                         this.setState({loading: false, submitted: false});
@@ -51,10 +49,6 @@ export default class Contact extends React.Component {
     }
 
 
-    setValue(name, { value, valid }) {
-        this.data[name] = value;
-        this.valid[name] = valid;
-    }
     render() {
         return (
             <section id="contact">
@@ -81,9 +75,10 @@ export default class Contact extends React.Component {
                             <a rel="noreferrer" href="https://api.whatsapp.com?send=+8801919403058/" target="_blank">Send message</a>
                         </div>
                     </div>
-                    <form /* [formGroup]="data" (ngSubmit)="submit()" */ onSubmit={(e) => this.submit(e)}>
-                        {/*<FormGroup clicked={this.state.clicked} name="Your Full Name" type="text" validators={[Validators.required]} onValueChange={e => this.setValue('name', e)} />*/}
-                        {/*<FormGroup clicked={this.state.clicked} name="Email" type="email" validators={[Validators.required, Validators.email]} onValueChange={e => this.setValue('email', e)} />*/}
+                    <form onSubmit={(e) => this.submit(e)}>
+                        <FormGroup clicked={this.state.clicked} name={'Your Full Name'} form_control={this.data.get('name')} />
+                        <FormGroup clicked={this.state.clicked} name={'Email'} form_control={this.data.get('email')} />
+                        <FormGroup clicked={this.state.clicked} type={'textarea'} name={'Message'} form_control={this.data.get('message')} />
                         {/*<FormGroup clicked={this.state.clicked} name="Your Message" type="textarea" validators={[Validators.required]} onValueChange={e => this.setValue('message', e)} />*/}
                         <button type="submit" className="btn btn-primary">Send</button>
                     </form>

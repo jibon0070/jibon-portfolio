@@ -36,7 +36,6 @@ export default class Home extends React.Component {
             PortfolioService.getPortfolioData(),
             TestimonialsService.getTestimonialData(),
         ]).then(([home_data, experience_data, portfolio_data, testimonial_data]) => {
-            console.log(home_data)
             this.setState({
                 experiences: experience_data,
                 about_experience: home_data.experience,

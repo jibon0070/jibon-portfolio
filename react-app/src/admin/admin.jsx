@@ -5,6 +5,9 @@ import {Helpers} from "../Helpers";
 import HeaderImage from "./header-image/header-image";
 import PageNotFound from "../commons/page-not-found/page-not-found";
 import AboutMe from "./about-me/about-me";
+import Experiences from "./experiences/experiences";
+import Portfolios from "./portfolios/portfolios";
+import Testimonials from "./testimonials/testimonials";
 
 export default class Admin extends React.Component {
     state = {
@@ -20,6 +23,9 @@ export default class Admin extends React.Component {
                 <Route path='/' element={<Component/>}/>
                 <Route path='/header-image' element={<HeaderImage />} />
                 <Route path={'/about-me'} element={<AboutMe />} />
+                <Route path={'/experiences/*'} element={<Experiences />} />
+                <Route path={'/portfolios/*'} element={<Portfolios />} />
+                <Route path={'/testimonials/*'} element={<Testimonials />} />
 
 
                 <Route path={'/*'} element={<PageNotFound />} />
@@ -34,6 +40,10 @@ class Component extends React.Component {
         routes: ['header-image', 'about-me', 'experiences', 'portfolios', 'testimonials', 'contacts']
     }
 
+    componentDidMount() {
+        document.title = 'Admin'
+    }
+
     logout() {
         UsersService.logout()
         UsersService.$is_logged_in.emit(false);
@@ -45,8 +55,8 @@ class Component extends React.Component {
             <div className="container">
                 {this.state.go_to_login ? <Navigate to="/auth/login"/> : null}
                 <div className="align-right mt-3">
-                    <Link to='/'>Home</Link>
-                    <button onClick={this.logout.bind(this)} className='btn btn-primary'>Logout</button>
+                    <Link to='/' className={'btn btn-primary'}>Home</Link>
+                    <button onClick={this.logout.bind(this)} className='btn'>Logout</button>
                 </div>
                 <h2 className='align-center mt-3'>Admin Panel</h2>
                 <div style={{

@@ -31,6 +31,7 @@ export default class FormControl {
      * @type {Function | null}
      */
     #setState = null;
+    #validator_time_out;
 
     /**
      * @param {string} value
@@ -39,13 +40,16 @@ export default class FormControl {
     constructor(value = '', validators = []) {
         this.value = value;
         this.#validators = validators;
-        this.#validate(validators, value);
+        this.#validate();
     }
 
     /**
      * @return void
      */
     #validate() {
+        if (this.#validator_time_out){
+            clearInterval(this.#validator_time_out);
+        }
         let errors = {}
         for (let validator of this.#validators) {
             const error = validator(this.value)
@@ -53,7 +57,11 @@ export default class FormControl {
         }
         this.errors = errors;
         this.valid = !Object.keys(errors).length;
-        this.#setState?.({valid: this.valid, errors});
+        if (!this.#setState) {
+            this.#validator_time_out = setTimeout(this.#validate.bind(this), 1000);
+        } else {
+            this.#setState({valid: this.valid, errors});
+        }
     }
 
     /**

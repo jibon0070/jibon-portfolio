@@ -247,6 +247,7 @@ class Contact extends Controller
 
 class AdminController extends Controller
 {
+    //selected
     public function headerImageAction($params)
     {
         if (!$this->request->isGet() && !$this->request->isDelete() && !$this->request->isPost()) return $this->send->status(404);
@@ -287,56 +288,54 @@ class AdminController extends Controller
         }
     }
 
-    public function aboutMeImageAction()
-    {
-        if (!$this->request->isPost()) $this->send->status(404);
-        if ($this->auth->error()) $this->send->status(401);
-        ini_set('upload_max_filesize', '100M');
-        if (!isset($_POST['state'])) $this->send->status(401);
-        $state = $_POST['state'];
-        $site_options = (new SiteOptionsModel())->findFirst([conditions => "name = 'about_me_image'", order => "id DESC"]);
-        if (!$site_options) $site_options = new SiteOptionsModel();
-        if ($state == 'get') {
-            $this->send->json(["url" => $site_options->option_value]);
-        }
-        if (!isset($_FILES) || !isset($_FILES['image'])) $this->send->status(401);
-        $image = (object)$_FILES['image'];
-        if ($image->error != 0) $this->send->json([error => "Error uploading image"]);
-        if (!is_dir(root . ds . 'uploads'))
-            mkdir(root . ds . 'uploads');
-        if (!is_dir(root . ds . 'uploads' . ds . 'images'))
-            mkdir(root . ds . 'uploads' . ds . 'images');
-        $path = ds . 'uploads' . ds . 'images' . ds . time() . '.' . random_int(0, 1000) . '.' . $image->name;
-        $path = str_replace(' ', '-', $path);
-        move_uploaded_file($image->tmp_name, root . $path);
-        if ($site_options->option_value)
-            unlink(root . $site_options->option_value);
-        $site_options->name = 'about_me_image';
-        $site_options->option_value = $path;
-        $site_options->save();
-        $this->send->json([success => true]);
-    }
-
+    //selected
     public function aboutMeAction($p)
     {
         if (!count($p) || $p[0] === '' || $p[0] == 'index') {
-
+            if (!$this->request->isGet() && !$this->request->isPost()) return $this->send->status(404);
+            if ($this->auth->error()) return $this->send->status(401);
+            if ($this->request->isGet()) {
+                $clients = (new SiteOptionsModel())->findFirst([conditions => "name = 'clients'", order => 'id DESC']);
+                if (!$clients) $clients = 0;
+                else $clients = $clients->option_value;
+                $experience = (new SiteOptionsModel())->findFirst([conditions => "name = 'experience'", order => 'id desc']);
+                if (!$experience) $experience = 0;
+                else $experience = $experience->option_value;
+                $projects = (new SiteOptionsModel())->findFirst([conditions => "name = 'projects'", order => 'id desc']);
+                if (!$projects) $projects = 0;
+                else $projects = $projects->option_value;
+                return $this->send->json(['clients' => $clients, 'experience' => $experience, 'projects' => $projects]);
+            } elseif ($this->request->isPost()) {
+                $data = $this->request->get();
+                try {
+                    if (gettype($data) !== 'object' || gettype($data->name) !== 'string' || gettype($data->value) !== 'string') return $this->send->status(401);
+                } catch (Exception $exception) {
+                    return $this->send->status(401);
+                }
+                $site_options = (new SiteOptionsModel())->findFirst([conditions => "name = ?", bind => [$data->name], order => 'id desc']);
+                if (!$site_options) {
+                    $site_options = new SiteOptionsModel();
+                    $site_options->name = $data->name;
+                }
+                $site_options->option_value = $data->value;
+                $site_options->save();
+                $this->send->json([success => true]);
+            }
         } elseif ($p[0] == 'image') {
             array_shift($p);
             if (!count($p) || $p[0] == '' || $p[0] == 'index') {
                 if (!$this->request->isGet() && !$this->request->isPost() && !$this->request->isDelete()) return $this->send->status(404);
                 if ($this->auth->error()) return $this->send->status(401);
-                $site_options = (new SiteOptionsModel())->findFirst([conditions => "name = 'about_me_image'", order => 'ID DESC']);
+                $site_options = (new SiteOptionsModel())->findFirst([conditions => "name = 'about_me_image'", order => 'id DESC']);
                 if ($this->request->isGet()) {
                     if (!$site_options) return $this->send->json(['url' => null]);
                     return $this->send->json(['url' => $site_options->option_value]);
-                }
-                elseif ($this->request->isPost()) {
+                } elseif ($this->request->isPost()) {
                     $file = (object)$_FILES['file'];
                     if ($file->error !== 0) return $this->send->json([error => 'error uploading file']);
                     if ($file->size > 5000000) return $this->send->json([error => 'max upload size']);
                     if (!is_dir(root . ds . 'uploads')) mkdir(root . ds . 'uploads');
-                    if (!is_dir(root.ds.'uploads'.ds.'images')) mkdir(root.ds.'uploads'.ds.'images');
+                    if (!is_dir(root . ds . 'uploads' . ds . 'images')) mkdir(root . ds . 'uploads' . ds . 'images');
                     $new_name = 'uploads' . ds . 'images' . ds . time() . $file->name;
                     try {
                         move_uploaded_file($file->tmp_name, root . ds . $new_name);
@@ -354,8 +353,7 @@ class AdminController extends Controller
                     $site_options->option_value = '/' . preg_replace('/\\' . ds . '/', '/', $new_name);
                     $site_options->save();
                     $this->send->json([success => true, 'url' => $site_options->option_value]);
-                }
-                elseif ($this->request->isDelete()) {
+                } elseif ($this->request->isDelete()) {
                     if ($site_options) {
                         if (file_exists(root . ds . $site_options->option_value)) unlink(root . ds . $site_options->option_value);
                         $site_options->delete();
@@ -366,31 +364,126 @@ class AdminController extends Controller
         }
     }
 
-    public function siteOptionsAction($params)
+    //selected
+    public function experiencesAction($p)
     {
-        $site_options_controller = new SiteOptions();
-        if (!count($params) || $params[0] == '' || $params[0] == 'index') $site_options_controller->index();
-        elseif ($params[0] == 'new') $site_options_controller->new();
-        elseif ($params[0] == 'delete') $site_options_controller->delete();
-        $this->send->status(404);
+        if (count($p) && $p[0] == 'index') array_shift($p);
+        if (
+            !$this->request->isGet() &&
+            !$this->request->isDelete() &&
+            !$this->request->isPost()
+        ) return $this->send->status(404);
+        if ($this->auth->error()) $this->send->status(401);
+        if ($this->request->isGet()) {
+            $experiences = (new ExperienceModel())->find([order => 'id desc']);
+            $this->send->json($experiences);
+        } elseif ($this->request->isDelete()) {
+            $id = $p[0];
+            $experiences = (new ExperienceModel())->findById($id);
+            if (!$experiences) $this->send->json([success => true]);
+            $experiences->delete();
+            $this->send->json([success => true]);
+        } elseif ($this->request->isPost()) {
+            $data = $this->request->get();
+            try {
+                if (
+                    gettype($data) !== 'object' ||
+                    gettype($data->title) !== 'string' ||
+                    $data->title === '' ||
+                    gettype($data->experience) !== 'string' ||
+                    $data->experience === '' ||
+                    gettype($data->category) !== 'string' ||
+                    !(
+                        $data->category == 'frontend' ||
+                        $data->category == 'backend'
+                    )
+                ) return $this->send->status(401);
+            } catch (Exception $exception) {
+                $this->send->status(401);
+            }
+            $experiences = new ExperienceModel();
+            $experiences->title = $data->title;
+            $experiences->experience = $data->experience;
+            $experiences->category = $data->category;
+            $experiences->save();
+            $this->send->json([success => true]);
+        }
     }
 
-    public function experienceAction($params)
+    //selected
+
+    /**
+     * @throws Exception
+     */
+    public function portfoliosAction($p)
     {
-        $experience_controller = new Experience();
-        if (!count($params) || $params[0] == '' || $params[0] == 'index') $experience_controller->index();
-        elseif ($params[0] == 'new') $experience_controller->new();
-        elseif ($params[0] == 'delete') $experience_controller->delete();
-        $this->send->status(404);
+        if (count($p) && $p[0] == 'index') array_shift($p);
+        if (
+            !$this->request->isGet() &&
+            !$this->request->isDelete() &&
+            !$this->request->isPost()
+        ) $this->send->status(404);
+        if ($this->auth->error()) $this->send->status(401);
+        if ($this->request->isGet()) {
+            $portfolios = (new PortfolioModel())->find([order => 'id desc']);
+            $this->send->json($portfolios);
+        } elseif ($this->request->isDelete()) {
+            if (!count($p)) return $this->send->status(404);
+            $id = $p[0];
+            $portfolios = (new PortfolioModel())->findById($id);
+            $portfolios->image_link = preg_replace('/\//', ds, $portfolios->image_link);
+            if (file_exists(root . $portfolios->image_link)) unlink(root . $portfolios->image_link);
+            $portfolios->delete();
+            $this->send->json([success => true]);
+        } elseif ($this->request->isPost()) {
+            $image = (object)$_FILES['image'];
+            $data = (object)$_POST;
+            try {
+                if (
+                    gettype($data->title) !== 'string' ||
+                    $data->title == ''
+                ) $this->send->status(401);
+            } catch (Exception $exception) {
+                $this->send->status(401);
+            }
+            if ($image->error !== 0) $this->send->json([error => 'Error uploading image.']);
+            if ($image->size > 5000000) $this->send->json([error => 'upload size exceeded.']);
+            if (!is_dir(root . ds . 'uploads')) mkdir(root . ds . 'uploads');
+            if (!is_dir(root . ds . 'uploads' . ds . 'images')) mkdir(root . ds . 'uploads' . ds . 'images');
+            $new_name = ds . time() . ' ' . random_int(0, 999) . ' ' . $image->name;
+            move_uploaded_file($image->tmp_name, root . $new_name);
+
+            $portfolios = new PortfolioModel();
+            $portfolios->image_link = preg_replace('/\\' . ds . '/', '/', $new_name);
+            $portfolios->title = $data->title;
+            $portfolios->github_link = $data->github_link;
+            $portfolios->live_link = $data->live_link;
+
+            $portfolios->save();
+
+            $this->send->json([success => true]);
+        }
     }
 
-    public function portfolioAction($params)
+    //selected
+    public function testimonialsAction($p)
     {
-        $portfolio_controller = new Portfolio();
-        if (!count($params) || $params[0] == '' || $params[0] == 'index') $portfolio_controller->index();
-        elseif ($params[0] == 'new') $portfolio_controller->new();
-        elseif ($params[0] == 'delete') $portfolio_controller->delete();
-        $this->send->status(404);
+        if (count($p) && $p[0] == 'index') array_shift($p);
+        if (!$this->request->isGet() && !$this->request->isDelete()) $this->send->status(404);
+        if ($this->auth->error()) $this->send->status(401);
+        if ($this->request->isGet()) {
+            $testimonials = (new TestimonialModel())->find([order => 'id desc']);
+            $this->send->json($testimonials);
+        } elseif ($this->request->isDelete()) {
+            if (!count($p)) $this->send->status(404);
+            $id = $p[0];
+            $testimonials = (new TestimonialModel())->findById($id);
+            if ($testimonials) {
+                if (file_exists(root.preg_replace('/\//', ds, $testimonials->image_link))) unlink(root.preg_replace('/\//', ds, $testimonials->image_link));
+                $testimonials->delete();
+            }
+            $this->send->json([success => true]);
+        }
     }
 
     public function testimonialAction($params)

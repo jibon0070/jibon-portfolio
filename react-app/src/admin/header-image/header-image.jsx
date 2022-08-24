@@ -11,6 +11,7 @@ export default class HeaderImage extends React.Component {
     }
 
     componentDidMount() {
+        document.title = 'Admin | Header Image'
         AdminService.headerImage.index().then(res => {
             this.setState({loading: false, header_image: res.url});
         });
