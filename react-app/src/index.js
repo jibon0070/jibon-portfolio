@@ -8,7 +8,11 @@ import Admin from "./admin/admin";
 import Auth from "./auth/auth";
 import PageNotFound from "./commons/page-not-found/page-not-found";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+/**
+ * @type {HTMLElement}
+ */
+const temp = document.getElementById('root')
+const root = ReactDOM.createRoot(temp);
 root.render(
     <React.StrictMode>
         <BrowserRouter>

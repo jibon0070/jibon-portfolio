@@ -5,7 +5,11 @@ export default class Fetch {
      * @return {string}
      */
     static get #base_url() {
-        return document.querySelector("base")?.base_url;
+        /**
+         * @type {HTMLBaseElement}
+         */
+        const base = document.querySelector("base");
+        return base?.baseURI;
     }
 
     /**

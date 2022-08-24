@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 //time zone
 date_default_timezone_set('Asia/Dhaka');
 
-define('ds', DIRECTORY_SEPARATOR);
+const ds = DIRECTORY_SEPARATOR;
 define('root', dirname(__FILE__));
 
 $url = isset($_SERVER['REQUEST_URI']) ? explode('/', rtrim(ltrim(explode('?', $_SERVER['REQUEST_URI'])[0], '/'), '/')) :[];

@@ -21,22 +21,27 @@ html {
       margin: auto;
     }
 
+    //noinspection CssUnusedSymbol
     .col-md-1 {
       width: calc(100% / 12 * 1);
     }
 
+    //noinspection CssUnusedSymbol
     .col-md-2 {
       width: calc(100% / 12 * 2);
     }
 
+    //noinspection CssUnusedSymbol
     .col-md-3 {
       width: calc(100% / 12 * 3);
     }
 
+    //noinspection CssUnusedSymbol
     .col-md-4 {
       width: calc(100% / 12 * 4);
     }
 
+    //noinspection CssUnusedSymbol
     .col-md-5 {
       width: calc(100% / 12 * 5);
     }
@@ -45,34 +50,42 @@ html {
       width: calc(100% / 12 * 6);
     }
 
+    //noinspection CssUnusedSymbol
     .col-md-7 {
       width: calc(100% / 12 * 7);
     }
 
+    //noinspection CssUnusedSymbol
     .col-md-8 {
       width: calc(100% / 12 * 8);
     }
 
+    //noinspection CssUnusedSymbol
     .col-md-9 {
       width: calc(100% / 12 * 9);
     }
 
+    //noinspection CssUnusedSymbol
     .col-md-10 {
       width: calc(100% / 12 * 10);
     }
 
+    //noinspection CssUnusedSymbol
     .col-md-11 {
       width: calc(100% / 12 * 11);
     }
 
+    //noinspection CssUnusedSymbol
     .col-md-12 {
       width: calc(100% / 12 * 12);
     }
 
+    //noinspection CssUnusedSymbol
     .mt-1 {
       margin-top: .25em;
     }
 
+    //noinspection CssUnusedSymbol
     .mt-2 {
       margin-top: .5em;
     }
@@ -81,10 +94,12 @@ html {
       margin-top: .75em;
     }
 
+    //noinspection CssUnusedSymbol
     .mt-4 {
       margin-top: 1em;
     }
 
+    //noinspection CssUnusedSymbol
     .mt-5 {
       margin-top: 1.25em;
     }
@@ -124,6 +139,7 @@ html {
           color: $color-light;
         }
 
+        //noinspection CssUnusedSymbol
         &.is-invalid {
           border-color: red;
         }
