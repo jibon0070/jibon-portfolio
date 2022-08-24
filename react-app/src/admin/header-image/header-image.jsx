@@ -1,8 +1,9 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 import Loading from "../../commons/loading/loading";
 import AdminService from "../../services/admin.service";
 import Config from "../../Config";
+import UsersService from "../../services/users.service";
 
 export default class HeaderImage extends React.Component {
     state = {
@@ -20,6 +21,7 @@ export default class HeaderImage extends React.Component {
     render() {
         return (
             <div id="header-image">
+                {!UsersService.is_logged_in ? <Navigate to={'/auth/login'}/> : null}
                 <div className="container">
                     <h1 className={'align-center mt-3'}>Header Image</h1>
                     <div className="align-right mt-3">

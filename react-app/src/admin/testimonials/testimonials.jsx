@@ -1,9 +1,11 @@
 import React from "react";
-import {Link, Route, Routes} from "react-router-dom";
+import {Link, Navigate, Route, Routes} from "react-router-dom";
 import PageNotFound from "../../commons/page-not-found/page-not-found";
 import Loading from "../../commons/loading/loading";
 import AdminService from "../../services/admin.service";
 import Config from "../../Config";
+import New from "./new/new";
+import UsersService from "../../services/users.service";
 
 class Component extends React.Component {
     state = {
@@ -21,6 +23,7 @@ class Component extends React.Component {
     render() {
         return (
             <div id={'testimonials'}>
+                {!UsersService.is_logged_in ? <Navigate to={'/auth/login'}/> : null}
                 <div className="container">
                     <h2 className="align-center mt-3">Testimonials</h2>
                     <div className="align-right mt-3">
@@ -84,6 +87,7 @@ export default class Testimonials extends React.Component {
         return (
             <Routes>
                 <Route path={''} element={<Component/>}/>
+                <Route path={'new'} element={<New/>}/>
 
                 <Route path={'*'} element={<PageNotFound/>}/>
             </Routes>

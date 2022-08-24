@@ -2,8 +2,9 @@ import React from "react";
 import Loading from "../../commons/loading/loading";
 import AdminService from "../../services/admin.service";
 import Config from "../../Config";
-import {Link} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 import {Helpers} from "../../Helpers";
+import UsersService from "../../services/users.service";
 
 export default class AboutMe extends React.Component {
     state = {
@@ -38,6 +39,7 @@ export default class AboutMe extends React.Component {
     render() {
         return (
             <div id="about-me">
+                {!UsersService.is_logged_in ? <Navigate to={'/auth/login'}/> : null}
                 <div className="container">
                     <h2 className="align-center mt-3">About Me</h2>
                     <div className="align-right mt-3">
@@ -58,7 +60,7 @@ export default class AboutMe extends React.Component {
                                     <td>{Helpers.title_case(row)}</td>
                                     <td>{this.state.data[row]}</td>
                                     <td>
-                                        <button onClick={e => this.edit(row, this.state.data[row])}
+                                        <button onClick={() => this.edit(row, this.state.data[row])}
                                                 className={'btn btn-primary'}>Edit
                                         </button>
                                     </td>

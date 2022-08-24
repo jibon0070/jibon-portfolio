@@ -73,6 +73,7 @@ export default class Home extends React.Component {
                 <Testimonials testimonials={this.state.testimonials}/>
                 <Contact/>
                 {this.state.loading ? <Loading/> : null}
+                <div className="mt-5"></div>
             </div>
         );
     }

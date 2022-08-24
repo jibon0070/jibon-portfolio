@@ -169,6 +169,38 @@ export default class AdminService {
         delete: (id) => {
             return Fetch.delete(AdminService.#url + '/testimonials/' + id)
         },
+        /**
+         * @param {FormData} data
+         * @return {Promise<{
+         *     success: boolean,
+         *     error:string
+         * }>}
+         */
+        new: (data) => {
+            return Fetch.post(AdminService.#url + '/testimonials', data);
+        },
     };
-
+    static contacts = {
+        /**
+         * @return {Promise<{
+         *     id:string,
+         *     name:string,
+         *     email:string,
+         *     message:string,
+         *     created_at:string
+         * }[]>}
+         */
+        index: () => {
+            return Fetch.get(AdminService.#url + '/contacts')
+        },
+        /**
+         * @param {string} id
+         * @return {Promise<{
+         *     success:boolean
+         * }>}
+         */
+        delete: (id) => {
+            return Fetch.delete(AdminService.#url + '/contacts/' + id);
+        },
+    }
 }

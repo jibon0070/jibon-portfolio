@@ -6,6 +6,7 @@ import FormGroup from "../../../commons/form-group/form-group";
 import Loading from "../../../commons/loading/loading";
 import {Link, Navigate} from "react-router-dom";
 import AdminService from "../../../services/admin.service";
+import UsersService from "../../../services/users.service";
 
 export default class New extends React.Component {
 
@@ -27,6 +28,7 @@ export default class New extends React.Component {
         return (
             <div id={'new'}>
                 {this.state.go_back ? <Navigate to={'../'}></Navigate> : null}
+                {!UsersService.is_logged_in ? <Navigate to={'/auth/login'}/> : null}
                 <div className="container align-center">
                     <div className="card mt-3 col-md-6">
                         <div className="card-header">New Portfolio</div>

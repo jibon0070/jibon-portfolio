@@ -8,29 +8,24 @@ import AboutMe from "./about-me/about-me";
 import Experiences from "./experiences/experiences";
 import Portfolios from "./portfolios/portfolios";
 import Testimonials from "./testimonials/testimonials";
+import Contacts from './contacts/contact'
 
 export default class Admin extends React.Component {
-    state = {
-        go_to_login: !UsersService.is_logged_in,
-        routes: ['header-image', 'about-me', 'experiences', 'portfolios', 'testimonials', 'contacts']
-    }
-
-
     render() {
-        return (<div id="admin">
-            {this.state.go_to_login ? <Navigate to="/auth/login"/> : null}
+        return (
             <Routes>
                 <Route path='/' element={<Component/>}/>
-                <Route path='/header-image' element={<HeaderImage />} />
-                <Route path={'/about-me'} element={<AboutMe />} />
-                <Route path={'/experiences/*'} element={<Experiences />} />
-                <Route path={'/portfolios/*'} element={<Portfolios />} />
-                <Route path={'/testimonials/*'} element={<Testimonials />} />
+                <Route path='/header-image' element={<HeaderImage/>}/>
+                <Route path={'/about-me'} element={<AboutMe/>}/>
+                <Route path={'/experiences/*'} element={<Experiences/>}/>
+                <Route path={'/portfolios/*'} element={<Portfolios/>}/>
+                <Route path={'/testimonials/*'} element={<Testimonials/>}/>
+                <Route path={'/contacts'} element={<Contacts/>}/>
 
 
-                <Route path={'/*'} element={<PageNotFound />} />
+                <Route path={'/*'} element={<PageNotFound/>}/>
             </Routes>
-        </div>);
+        );
     }
 }
 
@@ -53,7 +48,7 @@ class Component extends React.Component {
     render() {
         return (
             <div className="container">
-                {this.state.go_to_login ? <Navigate to="/auth/login"/> : null}
+                {!UsersService.is_logged_in ? <Navigate to={'/auth/login'}/> : null}
                 <div className="align-right mt-3">
                     <Link to='/' className={'btn btn-primary'}>Home</Link>
                     <button onClick={this.logout.bind(this)} className='btn'>Logout</button>

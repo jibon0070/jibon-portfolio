@@ -1,9 +1,10 @@
 import React from "react";
-import {Link, Route, Routes} from "react-router-dom";
+import {Link, Navigate, Route, Routes} from "react-router-dom";
 import AdminService from "../../services/admin.service";
 import Loading from "../../commons/loading/loading";
 import New from "./new/new";
 import PageNotFound from "../../commons/page-not-found/page-not-found";
+import UsersService from "../../services/users.service";
 
 class Component extends React.Component {
     /**
@@ -34,6 +35,7 @@ class Component extends React.Component {
     render() {
         return (
             <div id="experiences">
+                {!UsersService.is_logged_in ? <Navigate to={'/auth/login'}/> : null}
                 <div className="container">
                     <h2 className="align-center mt-3">Experiences</h2>
                     <div className="align-right mt-3">

@@ -254,25 +254,25 @@ class AdminController extends Controller
         if ($this->auth->error()) return $this->send->status(401);
         $site_options = (new SiteOptionsModel())->findFirst([conditions => "name = 'header_image'", order => "id DESC"]);
         if ($this->request->isGet()) {
-            if (!$site_options) return $this->send->json(['url' => null]);
-            return $this->send->json(['url' => $site_options->option_value]);
+            if (!$site_options) $this->send->json(['url' => null]);
+            $this->send->json(['url' => $site_options->option_value]);
         } elseif ($this->request->isDelete()) {
             if ($site_options) {
                 if (file_exists(root . $site_options->option_value)) unlink(root . $site_options->option_value);
                 $site_options->delete();
-                return $this->send->json([success => true]);
+                $this->send->json([success => true]);
             }
         } elseif ($this->request->isPost()) {
             $file = (object)$_FILES['file'];
-            if ($file->error != 0) return $this->send->json([error => 'error uploading file']);
-            if ($file->size > 5000000) return $this->send->json([error => 'File size is greater then 5 mb']);
+            if ($file->error != 0) $this->send->json([error => 'error uploading file']);
+            if ($file->size > 5000000) $this->send->json([error => 'File size is greater then 5 mb']);
             if (!is_dir(root . ds . 'uploads')) mkdir(root . ds . 'uploads');
             if (!is_dir(root . ds . 'uploads' . ds . 'images')) mkdir(root . ds . 'uploads' . ds . 'images');
             $new_name = 'uploads' . ds . 'images' . ds . time() . $file->name;
             try {
                 move_uploaded_file($file->tmp_name, root . ds . $new_name);
             } catch (Exception $exception) {
-                return $this->send->json([error => 'error uploading file.']);
+                $this->send->json([error => 'error uploading file.']);
             }
             if (!$site_options || !$site_options->option_value) {
                 $site_options = new SiteOptionsModel();
@@ -304,7 +304,7 @@ class AdminController extends Controller
                 $projects = (new SiteOptionsModel())->findFirst([conditions => "name = 'projects'", order => 'id desc']);
                 if (!$projects) $projects = 0;
                 else $projects = $projects->option_value;
-                return $this->send->json(['clients' => $clients, 'experience' => $experience, 'projects' => $projects]);
+                $this->send->json(['clients' => $clients, 'experience' => $experience, 'projects' => $projects]);
             } elseif ($this->request->isPost()) {
                 $data = $this->request->get();
                 try {
@@ -328,19 +328,19 @@ class AdminController extends Controller
                 if ($this->auth->error()) return $this->send->status(401);
                 $site_options = (new SiteOptionsModel())->findFirst([conditions => "name = 'about_me_image'", order => 'id DESC']);
                 if ($this->request->isGet()) {
-                    if (!$site_options) return $this->send->json(['url' => null]);
-                    return $this->send->json(['url' => $site_options->option_value]);
+                    if (!$site_options) $this->send->json(['url' => null]);
+                    $this->send->json(['url' => $site_options->option_value]);
                 } elseif ($this->request->isPost()) {
                     $file = (object)$_FILES['file'];
-                    if ($file->error !== 0) return $this->send->json([error => 'error uploading file']);
-                    if ($file->size > 5000000) return $this->send->json([error => 'max upload size']);
+                    if ($file->error !== 0) $this->send->json([error => 'error uploading file']);
+                    if ($file->size > 5000000) $this->send->json([error => 'max upload size']);
                     if (!is_dir(root . ds . 'uploads')) mkdir(root . ds . 'uploads');
                     if (!is_dir(root . ds . 'uploads' . ds . 'images')) mkdir(root . ds . 'uploads' . ds . 'images');
                     $new_name = 'uploads' . ds . 'images' . ds . time() . $file->name;
                     try {
                         move_uploaded_file($file->tmp_name, root . ds . $new_name);
                     } catch (Exception $exception) {
-                        return $this->send->json([error => 'error uploading file.']);
+                        $this->send->json([error => 'error uploading file.']);
                     }
                     if (!$site_options || !$site_options->option_value) {
                         $site_options = new SiteOptionsModel();
@@ -450,7 +450,7 @@ class AdminController extends Controller
             if ($image->size > 5000000) $this->send->json([error => 'upload size exceeded.']);
             if (!is_dir(root . ds . 'uploads')) mkdir(root . ds . 'uploads');
             if (!is_dir(root . ds . 'uploads' . ds . 'images')) mkdir(root . ds . 'uploads' . ds . 'images');
-            $new_name = ds . time() . ' ' . random_int(0, 999) . ' ' . $image->name;
+            $new_name = ds . 'uploads' . ds . 'images' . ds . time() . ' ' . random_int(0, 999) . ' ' . $image->name;
             move_uploaded_file($image->tmp_name, root . $new_name);
 
             $portfolios = new PortfolioModel();
@@ -466,10 +466,18 @@ class AdminController extends Controller
     }
 
     //selected
+
+    /**
+     * @throws Exception
+     */
     public function testimonialsAction($p)
     {
         if (count($p) && $p[0] == 'index') array_shift($p);
-        if (!$this->request->isGet() && !$this->request->isDelete()) $this->send->status(404);
+        if (
+            !$this->request->isGet() &&
+            !$this->request->isDelete() &&
+            !$this->request->isPost()
+        ) $this->send->status(404);
         if ($this->auth->error()) $this->send->status(401);
         if ($this->request->isGet()) {
             $testimonials = (new TestimonialModel())->find([order => 'id desc']);
@@ -479,26 +487,50 @@ class AdminController extends Controller
             $id = $p[0];
             $testimonials = (new TestimonialModel())->findById($id);
             if ($testimonials) {
-                if (file_exists(root.preg_replace('/\//', ds, $testimonials->image_link))) unlink(root.preg_replace('/\//', ds, $testimonials->image_link));
+                if (file_exists(root . preg_replace('/\//', ds, $testimonials->image_link))) unlink(root . preg_replace('/\//', ds, $testimonials->image_link));
                 $testimonials->delete();
             }
+            $this->send->json([success => true]);
+        } elseif ($this->request->isPost()) {
+            $image = (object)$_FILES['image'];
+            $data = (object)$_POST;
+            try {
+                if (
+                    gettype($data->name) !== 'string' ||
+                    $data->name == '' ||
+                    gettype($data->description) !== 'string' ||
+                    $data->description == ''
+                ) $this->send->status(401);
+            } catch (Exception $exception) {
+                $this->send->status(401);
+            }
+            $new_name = ds . 'uploads' . ds . 'images' . ds . time() . random_int(0, 999) . $image->name;
+            move_uploaded_file($image->tmp_name, root . $new_name);
+            $testimonials = (new TestimonialModel());
+            $testimonials->image_link = preg_replace('/\\' . ds . '/', '/', $new_name);
+            $testimonials->name = $data->name;
+            $testimonials->description = $data->description;
+            $testimonials->save();
             $this->send->json([success => true]);
         }
     }
 
-    public function testimonialAction($params)
+    public function contactsAction($p)
     {
-        $testimonial_controller = new Testimonial();
-        if (!count($params) || $params[0] == '' || $params[0] == 'index') $testimonial_controller->index();
-        elseif ($params[0] == 'new') $testimonial_controller->new();
-        elseif ($params[0] == 'delete') $testimonial_controller->delete();
-        $this->send->status(404);
-    }
-
-    public function contactAction($params)
-    {
-        $contact_controller = new Contact();
-        if (!count($params) || $params[0] == '' || $params[0] == 'index') $contact_controller->index();
-        elseif ($params[0] == 'delete') $contact_controller->delete();
+        if (count($p) && $p[0] == 'index') array_shift($p);
+        if (!$this->request->isGet() && !$this->request->isDelete()) $this->send->status(404);
+        if ($this->auth->error()) $this->send->status(401);
+        if ($this->request->isGet()) {
+            $contacts = (new ContactModel())->find([conditions => "verified != '0'", order => 'id desc']);
+            $this->send->json($contacts);
+        } elseif ($this->request->isDelete()) {
+            if (!count($p))$this->send->status(404);
+            $id = $p[0];
+            $contacts = (new ContactModel())->findById($id);
+            if ($contacts) {
+                $contacts->delete();
+            }
+            $this->send->json([success => true]);
+        }
     }
 }
