@@ -1,5 +1,4 @@
 import React, {createRef} from "react";
-import "./form-group.scss";
 
 export default class FormGroup extends React.Component {
     ref = createRef();
